@@ -16,19 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProfileController::class, 'index']);
 
-Route::get('/formanime', [ProfileController::class, 'formanime'])->name('formanime');
-Route::post('/formanime', [ProfileController::class, 'animeAdd']);
-
-Route::get('/formassistindo', [ProfileController::class, 'formassistindo'])->name('formassistindo');
-Route::post('/formassistindo', [ProfileController::class, 'assistindoAdd'])->name('assistindoAdd');
-Route::delete('/formassistindo/{id}', [ProfileController::class, 'destroy_assistindo']);
-Route::get('/formassistindo/edit/{id}', [ProfileController::class, 'edit_assistindo']);
-Route::put('/formassistindo/update/{id}', [ProfileController::class, 'update_assistindo']);
-Route::get('/formassistindo/plusanime/{id_anime}/{id_assist}', [ProfileController::class, 'plusanime'])->name('plusanime');
-Route::get('/formassistindo/decreanime/{id_anime}/{id_assist}', [ProfileController::class, 'decreanime'])->name('decreanime');
-Route::get('/formassistindo/addranking/{id}', [ProfileController::class, 'addranking']);
-Route::get('/formassistindo/addcontinua/{id}', [ProfileController::class, 'addcontinua']);
-Route::get('/formassistindo/addparados/{id}', [ProfileController::class, 'addparados']);
 
 Route::get('/infoanime/{id}', [ProfileController::class, 'infoanime']);
 Route::get('/listadeanimes', [ProfileController::class, 'listadeanimes']);
@@ -45,6 +32,20 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/teste', [ProfileController::class, 'teste']);
     Route::get('/home', [ProfileController::class, 'home'])->name('home');
+    
+    Route::get('/formanime', [ProfileController::class, 'formanime'])->name('formanime');
+    Route::post('/formanime', [ProfileController::class, 'animeAdd'])->name('animeAdd');
+
+    Route::get('/formassistindo', [ProfileController::class, 'formassistindo'])->name('formassistindo');
+    Route::post('/formassistindo', [ProfileController::class, 'assistindoAdd'])->name('assistindoAdd');
+    Route::delete('/formassistindo/{id}', [ProfileController::class, 'destroy_assistindo']);
+    Route::get('/formassistindo/edit/{id}', [ProfileController::class, 'edit_assistindo']);
+    Route::put('/formassistindo/update/{id}', [ProfileController::class, 'update_assistindo']);
+    Route::get('/formassistindo/plusanime/{id_anime}/{id_assist}', [ProfileController::class, 'plusanime'])->name('plusanime');
+    Route::get('/formassistindo/decreanime/{id_anime}/{id_assist}', [ProfileController::class, 'decreanime'])->name('decreanime');
+    Route::get('/formassistindo/addranking/{id}', [ProfileController::class, 'addranking']);
+    Route::get('/formassistindo/addcontinua/{id}', [ProfileController::class, 'addcontinua']);
+    Route::get('/formassistindo/addparados/{id}', [ProfileController::class, 'addparados']);
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

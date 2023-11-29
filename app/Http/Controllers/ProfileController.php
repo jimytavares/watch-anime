@@ -20,7 +20,7 @@ use App\Models\users;
 class ProfileController extends Controller
 {
     private $id_user2;
-    private $user_id_sse;
+    private $idUserSs;
     
     /* Display the user's profile form */
     public function edit(Request $request): View
@@ -65,12 +65,15 @@ class ProfileController extends Controller
     
     public function __construct(){
         
-        $this->id_user2 = 'teste';
-        /*tentando pegar o id do usuario da sessao pra armazenar em uma variavel dentro do construtor para usar nos controladores*/
-        $this->user_id_sse = Session()->getId();
+        $this->id_user2 = 'teste construct';
         
-        /*$id_user = $session_user->id;
-        users::findOrFail($id_user)->increment('exp', 1);*/
+        /* ve porque ta retornando 0 na tela form_assistindo 
+        $this->idUserSs = Auth::id() ?? Session::get('user_id');*/
+        /*if (Auth::check()) {
+        $this->idUserSs = Auth::id();
+        } else {
+            $this->idUserSs = Session::get('user_id', 0);
+        }*/
         
     }
     
@@ -89,8 +92,14 @@ class ProfileController extends Controller
     }
     
     public function home(){
+        
+        /* Globals */
         $nome = "jimy";
+        $id_user_sse = Auth::id() ?? Session::get('user_id');
+        $level_user = users::where('id', $id_user_sse)->value('level');
+        $exp_usuario = users::where('id', $id_user_sse)->get();
         $idade = "30";
+        
         $buscar2 = request('search2');
         $dt = date('d/m/Y');
         $dataAtual = date('Y-m-d');
@@ -130,15 +139,21 @@ class ProfileController extends Controller
                 ->get();
         }
         
-        return view('pages.home', compact(["nome", "idade", "table_assistidos", "buscar2", "table_continua", "dt", "table_parados", "table_animes", "busca", "dataAtual", "ranking10Anime", "rankingAnime", "id_user_sse", "nivel_usuario"]));
+        return view('pages.home', compact(["nome", "idade", "table_assistidos", "buscar2", "table_continua", "dt", "table_parados", "table_animes", "busca", "dataAtual", "ranking10Anime", "rankingAnime", "id_user_sse", "nivel_usuario", "level_user", "exp_usuario"]));
     }
     
     public function formanime(){
+        
+        /* Globals */
+        $id_user_sse = Auth::id() ?? Session::get('user_id');
+        $level_user = users::where('id', $id_user_sse)->value('level');
+        $exp_usuario = users::where('id', $id_user_sse)->get();
+        
         $DataAtual = date('Y');
         
         $table_animes = table_anime::all();
         
-        return view('pages.form-dbanime', ["DataAtual" => $DataAtual, "table_animes" => $table_animes]);
+        return view('pages.form-dbanime', ["DataAtual" => $DataAtual, "table_animes" => $table_animes, "id_user_sse" => $id_user_sse, "level_user" => $level_user, "exp_usuario" => $exp_usuario]);
     }
     
     public function animeAdd(request $request){
@@ -154,19 +169,24 @@ class ProfileController extends Controller
         return redirect('/');
     }
     
-    /* Assistindo */
     public function formassistindo(){
+        
+        /* Globals */
         $nome = "jimy";
+        $id_user_sse = Auth::id() ?? Session::get('user_id');
+        $level_user = users::where('id', $id_user_sse)->value('level');
+        $exp_usuario = users::where('id', $id_user_sse)->get();
+        
+        /* Consultas */
         $table_animes = table_anime::all();
         
         $teste2 = $this->id_user2;
-        $teste3 = $this->user_id_sse;
-        
+        $teste3 = $this->idUserSs;
+        /* outra forma de pegar o id do usuario na sessao
         $session_user = auth()->user();
-        $id_user_sse = $session_user->id;
-        $nivel_usuario = users::where('id', $id_user_sse)->get();
+        $id_user_sse = $session_user->id;*/
         
-        return view('pages.form-assistindo', ["nome" => $nome, "table_animes" => $table_animes, "nivel_usuario" => $nivel_usuario, "id_user_sse" => $id_user_sse, "teste2" => $teste2, "teste3" => $teste3]);
+        return view('pages.form-assistindo', ["nome" => $nome, "table_animes" => $table_animes, "teste2" => $teste2, "teste3" => $teste3, "id_user_sse" => $id_user_sse, "level_user" => $level_user, "exp_usuario" => $exp_usuario]);
     }
     
     public function assistindoAdd(request $request){

@@ -64,6 +64,7 @@
     background-size: 400% 400%;
     position: relative;
     animation: change 10s ease-in-out infinite;
+        overflow-x: hidden;
 }
     @keyframes change {
         0%{background-position: 0 50%}
@@ -74,6 +75,8 @@
         .thema-black{ background-color:#1d2939 !important; color:white !important; }
         .btn-thema-black{ background-color:#17a2b7 !important; color:white !important; border:none; }
         
+        .btn-menu{ color:white; letter-spacing:2px; }
+        .btn-menu:hover{ text-decoration: underline; }
 </style>
 </head>
 <body class="bodyanimeted resp-bodyAll">  
@@ -94,16 +97,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a href="index.php" class="nav-link"><span data-hover="Home">Inicio</span></a>
+                        <a href="index.php" class="nav-link btn-menu" style="">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#project" class="nav-link"><span data-hover="Categorias">Categorias</span></a>
+                        <a href="#project" class="nav-link btn-menu">Categorias</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#resume" class="nav-link"><span data-hover="Destaques">Destaques</span></a>
+                        <a href="#resume" class="nav-link btn-menu">Destaques</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#contact" class="nav-link"><span data-hover="Notícias">Notícias</span></a>
+                        <a href="#contact" class="nav-link btn-menu">Notícias</a>
                     </li>
                 </ul>
 
@@ -111,12 +114,10 @@
                      <div class="ml-lg-4">
                       <div class="color-mode d-lg-flex justify-content-center align-items-center">
                           
-                          <button class="btn btn-light btn-sm">Admin</button>
-                          
                           <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" class="btn btn-light btn-sm" style="margin-left:5px;">
-                                <i class="fas fa-sign-in-alt"></i> {{ __('Log Out') }}
+                                <i class="fas fa-sign-in-alt"></i> {{ __('Sair') }}
                             </button>
                           </form>
                           
@@ -130,10 +131,6 @@
     {{-- .left/USUARIO --}}
     <div class="row">
         <div class="col-3">
-            
-            <div class="" style="background-image: linear-gradient(to right, #3FC9FE ,#3A7EC7, #2F449C); height:5px;">
-                <span style="color:white;">.</span>
-            </div>
 
             <section style="margin-top:40px;">
                 <div class="container-fluid">
@@ -147,14 +144,14 @@
                             <div class="box-user">
                                 <div class="row" style="margin-top:15px;">
                                     <div class="col-4">
-                                        <img src="#" style="width:100%; border-radius:5px; box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;"/>
+                                        <img src="{{ URL::asset('img/animes/ningen-fushin.jpg') }}" style="width:100%; border-radius:5px; box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;"/>
                                     </div>
                                     <div class="col-8">
                                         <h4>Jimy Dickson Jales da Silva</h4>
-                                        <small style="color:#38ef7d;">Level:</small>
+                                        <small style="color:#38ef7d;">Level: {{$level_user}}</small>
                                         <div class="progress">
-                                            @foreach($nivel_usuario as $nv_user)
-                                                <div class="progress-bar bg-success" role="progressbar" style="width: {{$nv_user->exp}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{$nv_user->exp}}%</div>
+                                            @foreach($exp_usuario as $exp_user)
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: {{$exp_user->exp}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{$exp_user->exp}}%</div>
                                             @endforeach
                                         </div>
                                         <div class="" style="margin-top:10px;">
@@ -170,10 +167,13 @@
 
                             {{-- /admin --}}
                             <div class="">
-                                <a href="{{ route('formanime') }}"><button class="btn btn-primary btn-sm btn-thema-black" style="width:100%;">Adicionar Anime</button></a>
-                                <a href="{{ route('formassistindo') }}"><button class="btn btn-primary btn-sm btn-thema-black" style="width:100%; margin-top:10px;">Assistindo</button></a>
-                                <button class="btn btn-secondary btn-sm btn-thema-black" style="width:100%; margin-top:10px;">Todos os Animes</button>
-                                <button class="btn btn-secondary btn-sm btn-thema-black" style="width:100%; margin-top:10px;">Meu Ranking</button>
+                                <a href="{{ route('dashboard') }}"><button class="btn btn-primary btn-sm btn-thema-black" style="width:100%;">Admin</button></a>
+                                <a href="{{ route('formanime') }}"><button class="btn btn-primary btn-sm btn-thema-black" style="width:100%; margin-top:10px;">Adicionar Anime</button></a>
+                            </div>
+                            <div class="" style="margin-top:15px;">
+                                <a href="{{ route('formassistindo') }}"><button class="btn btn-primary btn-sm btn-thema-black" style="width:100%; margin-top:10px;">Assistir Anime</button></a>
+                                <button class="btn btn-secondary btn-sm btn" style="width:100%; margin-top:10px;">Todos os Animes</button>
+                                <button class="btn btn-secondary btn-sm btn" style="width:100%; margin-top:10px;">Meu Ranking</button>
                                 <hr>
                             </div>
 

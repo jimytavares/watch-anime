@@ -25,7 +25,7 @@
             <!-- form -->
             <div class="container" style="margin-left:3%; width: 1000px; margin-top:30px; border: ;">
                 
-                <form action="/aprendendo-laravel/public/formanime" method="POST" enctype="multipart/form-date" autocomplete="on" style="font-family: 'Poppins', sans-serif;">
+                <form action="{{ route('animeAdd') }}" method="POST" enctype="multipart/form-date" autocomplete="on" style="font-family: 'Poppins', sans-serif;">
                   @csrf
                         
                     <div class="form-group">

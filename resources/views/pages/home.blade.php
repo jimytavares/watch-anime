@@ -5,10 +5,11 @@
 @section('content')
             
         {{-- ./Assistindo --}}
-        <div class="row thema-black" style="margin-top:40px; height:500px;">
+        <div class="row thema-black" style="margin-top:40px; width:100%; box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;">
+            
             @foreach($table_assistidos as $table_assistindo)
-                <div class="" style="box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px; margin-left:20px; width:450px; margin-top:20px; height:;">
-                    <div class="row">
+                <div class="" style="box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px; margin-left:20px; width:450px; margin-top:20px; height:100%;">
+                    <div class="row" style="margin-bottom:10px;">
                         <div class="col-4">
                             @if($table_assistindo->nota == '10')
                                 <img src="{{URL::asset('img/animes/' . $table_assistindo->nome_anime->image )}}" style="width:100%; height:170px; border-radius:5px; border: 2px solid #00ff00; margin-top:10px;">
@@ -71,78 +72,82 @@
                     </div>
                 </div>
             @endforeach
+            
+            <div class="">
+                .
+            </div>
         </div>
 
         {{-- ./Parados --}}
-        <section class="thema-black  py-5" style="margin-top:40px; box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;">
+        <section class="thema-black py-4" style="width:100%; margin-top:40px; box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;">
             <div class="container">
 
-                    <div class="row">
-                        <div class="col-10">
-                            <h4 style="letter-spacing:2px;"><i class="fas fa-hourglass-half"></i> Animes Pausados</h4>
-                        </div>
-                        <div class="col-2 activ">
-                            <a><i class="fas fa-sync-alt"></i> Minimizar</a>
-                        </div>
+                <div class="row">
+                    <div class="col-10">
+                        <h4 style="letter-spacing:2px;"><i class="fas fa-hourglass-half"></i> Animes Pausados</h4>
                     </div>
+                    <div class="col-2 activ">
+                        <a><i class="fas fa-sync-alt"></i> Minimizar</a>
+                    </div>
+                </div>
 
-                    <div class="row" id="categorias01">
+                <div class="row" id="categorias01">
 
-                        @foreach($table_parados as $animes_parados)
-                            <div class="col-5" style="margin-top:20px; background-color:; margin-left:10px;">
-                                <div class="row">
-                                    <div class="col-md-auto">
-                                        <img src="{{ URL::asset('img/animes/' . $animes_parados->nome_anime->image) }}" style="width:130px; border-radius:5px;"/>
-                                    </div>
-                                    <div class="col">
-                                        <h5 style="color:#ffff33;">{{$animes_parados->nome_anime->nome}}</h5>
-                                        <p style="color:white;"><b>Episódio Parado:</b> {{$animes_parados->episodio}}</p>
-                                        <small style="color:white;">{{$animes_parados->descricao}}</small>
-                                        <div class="row" style="margin-top:20px;">
-                                            <div class="col-md-auto">
-                                                Stoped: {{date('d.m.Y', strtotime($animes_parados->updated_at)) }}
-                                            </div>
-                                            <div class="col">
-                                                <a href="{{$animes_parados->link}}" target="_blank"><button class="btn btn-outline-success btn-sm" style="width:50%;">Assistir</button></a>
-                                                <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#paradosDestroy" style="width:50%;">Excluir</button>
+                    @foreach($table_parados as $animes_parados)
+                        <div class="col-5" style="margin-top:20px; background-color:; margin-left:10px;">
+                            <div class="row">
+                                <div class="col-md-auto">
+                                    <img src="{{ URL::asset('img/animes/' . $animes_parados->nome_anime->image) }}" style="width:130px; border-radius:5px;"/>
+                                </div>
+                                <div class="col">
+                                    <h5 style="color:#ffff33;">{{$animes_parados->nome_anime->nome}}</h5>
+                                    <p style="color:white;"><b>Episódio Parado:</b> {{$animes_parados->episodio}}</p>
+                                    <small style="color:white;">{{$animes_parados->descricao}}</small>
+                                    <div class="row" style="margin-top:20px;">
+                                        <div class="col-md-auto">
+                                            Data: {{date('d.m.Y', strtotime($animes_parados->updated_at)) }}
+                                        </div>
+                                        <div class="col">
+                                            <a href="{{$animes_parados->link}}" target="_blank"><button class="btn btn-outline-success btn-sm" style="width:50%;">Assistir</button></a>
+                                            <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#paradosDestroy" style="width:50%;">Excluir</button>
 
-                                                <!-- ./destroy-animes-parados -->
-                                                <div class="modal fade" id="paradosDestroy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Confirmação de Busca</h5>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p style="color:black;">{{$animes_parados->nome_anime->nome}}</p>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                                                <form action="{{ url('/paradosdestroy', $animes_parados->id) }}" method="post" style="margin-top:10px;">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="btn btn-outline-danger btn-sm" style="background-color:#2d3e50; border:none; color:white;"><i class="fa fa-trash-o" style="font-size:20px; border:none; color:red;"></i> Excluir</button>
-                                                                </form>
-                                                            </div>
+                                            <!-- ./destroy-animes-parados -->
+                                            <div class="modal fade" id="paradosDestroy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Confirmação de Busca</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p style="color:black;">{{$animes_parados->nome_anime->nome}}</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                                            <form action="{{ url('/paradosdestroy', $animes_parados->id) }}" method="post" style="margin-top:10px;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-outline-danger btn-sm" style="background-color:#2d3e50; border:none; color:white;"><i class="fa fa-trash-o" style="font-size:20px; border:none; color:red;"></i> Excluir</button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <!--<form action="{{ url('/paradosdestroy', $animes_parados->id) }}" method="post" style="margin-top:10px;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger btn-sm" style="background-color:#2d3e50; border:none; color:white; width:50%;"><i class="fa fa-trash-o" style="font-size:20px; border:none; color:red;"></i> Excluir</button>
-                                                </form>-->
                                             </div>
+
+                                            <!--<form action="{{ url('/paradosdestroy', $animes_parados->id) }}" method="post" style="margin-top:10px;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-outline-danger btn-sm" style="background-color:#2d3e50; border:none; color:white; width:50%;"><i class="fa fa-trash-o" style="font-size:20px; border:none; color:red;"></i> Excluir</button>
+                                            </form>-->
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
-                    </div>
+                        </div>
+                    @endforeach
+                </div>
 
             </div>
         </section>
@@ -173,39 +178,25 @@
                     <div class="col-lg-6 col-12">
                       <h2 class="mb-4 mobile-mt-2" style="letter-spacing:2px; color:#66ffff;">Top Ranking Animes</h2>
 
-                        <div class="timeline">
-                            @foreach($ranking10Anime as $ranking10Animes)
-                                <div class="timeline-wrapper">
-                                     <div class="timeline-yr">
-                                          <img src="{{URL::asset('img/animes/' . $ranking10Animes->nome_anime->image )}}" style="width:100%; height:; border-radius:5px; box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;">
-                                     </div>
-                                     <div class="timeline-info">
-                                          <h3><span>{{$ranking10Animes->nome_anime->nome}}</span><small style="color:#3385ff;">Nota: {{$ranking10Animes->nota}}</small></h3>
-                                          <p>{{$ranking10Animes->descricao}}</p>
-                                         <a href="#" style="color:green;"><i class="far fa-arrow-alt-circle-right"></i> Saiba mais</a>
-                                     </div>
-                                </div>
-                            @endforeach
+                        @foreach($ranking10Anime as $ranking10Animes)
+                            <div class="row">
+                                 <div class="col-3">
+                                      <img src="{{URL::asset('img/animes/' . $ranking10Animes->nome_anime->image )}}" style="width:100%; height:; border-radius:5px; box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;">
+                                 </div>
+                                 <div class="col-9">
+                                      <h5><span>{{$ranking10Animes->nome_anime->nome}}</span><small style="color:#3385ff;">Nota: {{$ranking10Animes->nota}}</small></h5>
+                                      <p>{{$ranking10Animes->descricao}}</p>
+                                      <img src="{{ URL::asset('img/icons/2-icon.gif') }}" />
+                                      <p>{{$ranking10Animes->nome_anime->temporada}}</p>
+                                      <a href="#" style="color:green;"><i class="far fa-arrow-alt-circle-right"></i> Saiba mais</a>
+                                 </div>
+                            </div>
+                        @endforeach
 
-                        </div>
                     </div>
 
                 </div>
             </div>
         </section>
 
-        {{-- ./end --}}
-        <section>
-            <div class="container-fluid" style="background-color:#f5f7fa; height:80px; box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;">
-                <div class="container" style="padding-top:21px;">
-                    <div class="row">
-                    <div class="col"><h3><i class="fas fa-comments" style="opacity:0.8;"></i> Ouvidoria</h3></div>
-                    <div class="col"> <button class="btn btn-success" style="width:100%; background-color:#075857;">Elogio/Sugestão</button> </div>
-                    <div class="col"> <button class="btn btn-success" style="width:100%; background-color:#075857;">Reclamação/Denuncia</button> </div>
-                    <div class="col"> <button class="btn btn-success" style="width:100%; background-color:#075857;">Pedido de Acesso a Informação</button> </div>
-                    </div>
-                </div>
-            </div>
-</section>
-   
 @endsection
