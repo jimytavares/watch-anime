@@ -19,8 +19,8 @@ Route::get('/', [ProfileController::class, 'index']);
 Route::get('/formanime', [ProfileController::class, 'formanime']);
 Route::post('/formanime', [ProfileController::class, 'animeAdd']);
 
-Route::get('/formassistindo', [ProfileController::class, 'formassistindo']);
-Route::post('/formassistindo', [ProfileController::class, 'assistindoAdd']);
+Route::get('/formassistindo', [ProfileController::class, 'formassistindo'])->name('formassistindo');
+Route::post('/formassistindo', [ProfileController::class, 'assistindoAdd'])->name('assistindoAdd');
 Route::delete('/formassistindo/{id}', [ProfileController::class, 'destroy_assistindo']);
 Route::get('/formassistindo/edit/{id}', [ProfileController::class, 'edit_assistindo']);
 Route::put('/formassistindo/update/{id}', [ProfileController::class, 'update_assistindo']);

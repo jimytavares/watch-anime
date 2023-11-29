@@ -15,12 +15,11 @@ use App\Models\table_assistindo;
 use App\Models\table_ranking;
 use App\Models\table_continua;
 use App\Models\AnimesParados;
+use App\Models\users;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
+    /* Display the user's profile form */
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -28,9 +27,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
+    /*  Update the user's profile information */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
@@ -44,9 +41,7 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /**
-     * Delete the user's account.
-     */
+    /* Delete the user's account */
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
@@ -72,7 +67,7 @@ class ProfileController extends Controller
     
     public function teste(){
         
-        /*recuperando todos os valores em array ad sessao*/
+        /* Recuperando todos os valores em array ad sessao */
         $usuario = auth()->user();
         $id_user_sse = $usuario->id;
         
@@ -86,14 +81,27 @@ class ProfileController extends Controller
         $dt = date('d/m/Y');
         $dataAtual = date('Y-m-d');
         
-        $usuario = auth()->user();
-        $id_user_sse = $usuario->id;
+        $session_user = auth()->user();
+        $id_user_sse = $session_user->id;
         
         $table_animes = table_anime::all();
         $table_continua = table_continua::with('nome_anime')->get();
         $table_parados = AnimesParados::with('nome_anime')->get();
-        $rankingAnime = table_anime::where('temporada', 'summer/julho')->orderBy('nome', 'asc')->take(4)->get();
-        $ranking10Anime = table_ranking::where('nota', 10)->orderBy('episodio', 'desc')->take(4)->get();
+        
+        /*section ranking anime*/
+        $rankingAnime = table_anime::where('temporada', 'summer/julho')
+            ->orderBy('nome', 'asc')
+            ->take(4)
+            ->get();
+        $ranking10Anime = table_ranking::where('nota', 10)
+            ->orderBy('episodio', 'desc')
+            ->take(4)
+            ->get();
+        
+        /* filtrando id da sessao para colocar a exp do nivel do ususario */
+        $session_user = auth()->user();
+        $id_user_sse = $session_user->id;
+        $nivel_usuario = users::where('id', $id_user_sse)->get();
         
         $busca = request('search');
         if($buscar2){
@@ -107,7 +115,7 @@ class ProfileController extends Controller
                 ->get();
         }
         
-        return view('pages.home', compact(["nome", "idade", "table_assistidos", "buscar2", "table_continua", "dt", "table_parados", "table_animes", "busca", "dataAtual", "ranking10Anime", "rankingAnime", "usuario", "id_user_sse"]));
+        return view('pages.home', compact(["nome", "idade", "table_assistidos", "buscar2", "table_continua", "dt", "table_parados", "table_animes", "busca", "dataAtual", "ranking10Anime", "rankingAnime", "id_user_sse", "nivel_usuario"]));
     }
     
     public function formanime(){
@@ -127,17 +135,6 @@ class ProfileController extends Controller
         $dbanime->episodio = $request->episodio;
         $dbanime->genero = $request->genero;
 
-        /*if($request->hasfile('image') && $request->file('image')->isValid())
-        {
-            $requestImage = $request->image;
-            $extension = $requestImage->extension();
-            $ImageName = md5($requestImage->getClientOriginalName() . strtotime('now') . '.' . $extension);
-            $file->store('caminho_de_destino');
-            $file->storeAs('caminho_de_destino');
-            $requestImage->move(public_path('img/animes'), $imageName);
-            $dbanime->image = $imageName;
-        }*/
-
         $dbanime->save();
         return redirect('/');
     }
@@ -147,10 +144,21 @@ class ProfileController extends Controller
         $nome = "jimy";
         $table_animes = table_anime::all();
         
-        return view('pages.form-assistindo', ["nome" => $nome, "table_animes" => $table_animes]);
+        $session_user = auth()->user();
+        $id_user_sse = $session_user->id;
+        $nivel_usuario = users::where('id', $id_user_sse)->get();
+        
+        return view('pages.form-assistindo', ["nome" => $nome, "table_animes" => $table_animes, "nivel_usuario" => $nivel_usuario, "id_user_sse" => $id_user_sse]);
     }
     
     public function assistindoAdd(request $request){
+        
+        /* Adicionando exp vinculado ao usuario apos add new anime */
+        $session_user = auth()->user();
+        $id_user = $session_user->id;
+        users::findOrFail($id_user)->increment('exp', 1);
+        
+        /* Cadastrando novo anime */
         $animewatch = new table_assistindo;
         
         $animewatch->id_anime = $request->id_anime;
@@ -159,10 +167,11 @@ class ProfileController extends Controller
         
         $animewatch->nota = $request->nota;
         $animewatch->descricao = $request->descricao;
+        $animewatch->id_usuario = $request->id_usuario;
         $animewatch->link = $request->link;
 
         $animewatch->save();
-        return redirect('/');
+        return redirect('/formassistindo');
     }
     
     /* Funções Table Anime Home */

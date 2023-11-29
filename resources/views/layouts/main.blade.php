@@ -125,7 +125,70 @@
         </div>
     </nav>
     
-    @yield('content')
+    {{-- .left/USUARIO --}}
+    <div class="row">
+        <div class="col-3">
+            
+            <div class="" style="background-image: linear-gradient(to right, #3FC9FE ,#3A7EC7, #2F449C); height:5px;">
+                <span style="color:white;">.</span>
+            </div>
+
+            <section style="margin-top:40px;">
+                <div class="container-fluid">
+
+                    <div class="row" style="width:99%; margin:0 auto;">
+
+                        <!-- #### .left #### -->
+                        <div class="thema-black" style="border-radius:3px; box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;;">
+
+                            {{-- /Usuario --}}
+                            <div class="box-user">
+                                <div class="row" style="margin-top:15px;">
+                                    <div class="col-4">
+                                        <img src="#" style="width:100%; border-radius:5px; box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;"/>
+                                    </div>
+                                    <div class="col-8">
+                                        <h4>Jimy Dickson Jales da Silva</h4>
+                                        <small style="color:#38ef7d;">Level:</small>
+                                        <div class="progress">
+                                            @foreach($nivel_usuario as $nv_user)
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: {{$nv_user->exp}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{$nv_user->exp}}%</div>
+                                            @endforeach
+                                        </div>
+                                        <div class="" style="margin-top:10px;">
+                                            <a href="https://www.intoxianime.com/2023/08/guia-de-temporada-outubro-2023/" target="_blank"><button class="btn btn-primary btn-sm" style="background-color:#2a80b9; border:none;">Intoxy Anime</button></a>
+                                            <a href="https://animesdigital.org/" target="_blank"><button class="btn btn-primary btn-sm" style="background-color:#2ecd71; border:none;">Anime Assistir</button></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <hr style="height:2px; background-color:blue; ">
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- /admin --}}
+                            <div class="">
+                                <p style="color:white; font-size:17px; letter-spacing:1px;">Administrador</p>
+                                <a href="/aprendendo-laravel/public/formanime"><button class="btn btn-primary btn-sm btn-thema-black" style="width:100%;">Adicionar Anime</button></a>
+                                <a href="{{ route('formassistindo') }}"><button class="btn btn-primary btn-sm btn-thema-black" style="width:100%; margin-top:10px;">Assistindo</button></a>
+                                <button class="btn btn-primary btn-sm btn-thema-black" style="width:100%; margin-top:10px;">Todos os Animes</button>
+                                <button class="btn btn-primary btn-sm btn-thema-black" style="width:100%; margin-top:10px;">Meu Ranking</button>
+                                <hr>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>
+            
+        </div>
+    
+        <div class="col">
+            @yield('content')
+        </div>
+    </div>
     
     <footer style="margin-top:40px;">
         <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
@@ -155,7 +218,6 @@
             });
         });
 	</script>
-
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>

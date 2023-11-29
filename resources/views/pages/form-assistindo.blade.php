@@ -22,7 +22,7 @@
             <!-- form -->
             <div class="container" style="margin-left:3%; width: 1000px; margin-top:30px; border: ;">
                 
-                <form action="/aprendendo-laravel/public/formassistindo" method="POST" enctype="multipart/form-date" autocomplete="on" style="font-family: 'Poppins', sans-serif;">
+                <form action="{{ route('assistindoAdd') }}" method="POST" enctype="multipart/form-date" autocomplete="on" style="font-family: 'Poppins', sans-serif;">
                     @csrf
                     <div class="form-group">
                         <div class="row">
@@ -91,8 +91,12 @@
                         <div class="col-2">
                             <p>Link:</p>
                         </div>
-                        <div class="col">
+                        <div class="col-8">
                             <input type="text" name="link" class="form-control" id="exampleFormControlInput1" placeholder="">
+                        </div>
+                        <div class="col-2">
+                            {{-- passando o id da sessão do usuário --}}
+                            <input type="text" name="id_usuario" class="form-control" id="exampleFormControlInput1" value="{{$id_user_sse}}" placeholder="{{$id_user_sse}}" style="color:white; border:none;">
                         </div>
                       </div>
                     </div>
