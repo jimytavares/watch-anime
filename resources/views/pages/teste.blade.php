@@ -5,3 +5,38 @@
 {{ $usuario }}
 <br/>
 {{ $id_user_sse }}
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Session;
+
+class SeuControlador extends Controller {
+    private $suaVariavel;
+
+    public function __construct() {
+        // Pegar o valor da sessão no construtor
+        $this->suaVariavel = Session::get('suaVariavel');
+    }
+
+    public function algumaFuncao() {
+        // Agora você pode acessar $this->suaVariavel em qualquer função do controlador
+        // Faça algo com $this->suaVariavel
+    }
+}
+
+
+class SeuControlador extends Controller {
+    private $suaVariavel;
+
+    public function __construct() {
+        // Inicializar a variável no construtor se necessário
+        $this->suaVariavel = 'valor inicial';
+    }
+
+    public function funcao1() {
+        // Acessar $this->suaVariavel
+    }
+
+    public function funcao2() {
+        // Acessar $this->suaVariavel
+    }
+}
