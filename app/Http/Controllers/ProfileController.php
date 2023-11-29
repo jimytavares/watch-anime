@@ -19,6 +19,9 @@ use App\Models\users;
 
 class ProfileController extends Controller
 {
+    private $id_user2;
+    private $user_id_sse;
+    
     /* Display the user's profile form */
     public function edit(Request $request): View
     {
@@ -60,6 +63,20 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
     
+    public function __construct(){
+        
+        $this->id_user2 = 'teste';
+        
+        
+        /* Adicionando exp vinculado ao usuario apos add new anime */
+        $session_user = auth()->user();
+        $this->user_id_sse = Session::get($session_user->id);
+        
+        /*$id_user = $session_user->id;
+        users::findOrFail($id_user)->increment('exp', 1);*/
+        
+    }
+    
     public function index() {
         
         return view('welcome');
@@ -84,11 +101,12 @@ class ProfileController extends Controller
         $session_user = auth()->user();
         $id_user_sse = $session_user->id;
         
+        /* Selects table */ 
         $table_animes = table_anime::all();
         $table_continua = table_continua::with('nome_anime')->get();
         $table_parados = AnimesParados::with('nome_anime')->get();
         
-        /*section ranking anime*/
+        /* Section ranking anime*/
         $rankingAnime = table_anime::where('temporada', 'summer/julho')
             ->orderBy('nome', 'asc')
             ->take(4)
@@ -98,7 +116,7 @@ class ProfileController extends Controller
             ->take(4)
             ->get();
         
-        /* filtrando id da sessao para colocar a exp do nivel do ususario */
+        /* Filtrando id da sessao para colocar a exp do nivel do ususario */
         $session_user = auth()->user();
         $id_user_sse = $session_user->id;
         $nivel_usuario = users::where('id', $id_user_sse)->get();
@@ -144,11 +162,13 @@ class ProfileController extends Controller
         $nome = "jimy";
         $table_animes = table_anime::all();
         
+        $teste2 = $this->id_user2;
+        
         $session_user = auth()->user();
         $id_user_sse = $session_user->id;
         $nivel_usuario = users::where('id', $id_user_sse)->get();
         
-        return view('pages.form-assistindo', ["nome" => $nome, "table_animes" => $table_animes, "nivel_usuario" => $nivel_usuario, "id_user_sse" => $id_user_sse]);
+        return view('pages.form-assistindo', ["nome" => $nome, "table_animes" => $table_animes, "nivel_usuario" => $nivel_usuario, "id_user_sse" => $id_user_sse, "teste2" => $teste2]);
     }
     
     public function assistindoAdd(request $request){

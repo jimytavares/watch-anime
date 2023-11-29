@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProfileController::class, 'index']);
 
-Route::get('/formanime', [ProfileController::class, 'formanime']);
+Route::get('/formanime', [ProfileController::class, 'formanime'])->name('formanime');
 Route::post('/formanime', [ProfileController::class, 'animeAdd']);
 
 Route::get('/formassistindo', [ProfileController::class, 'formassistindo'])->name('formassistindo');
@@ -44,7 +44,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/teste', [ProfileController::class, 'teste']);
-    Route::get('/home', [ProfileController::class, 'home']);
+    Route::get('/home', [ProfileController::class, 'home'])->name('home');
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

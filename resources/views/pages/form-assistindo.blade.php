@@ -113,6 +113,8 @@
                 
             </div><br/>
             
+            <p>{{ $teste2 }}</p>
+            
         </div>
         
     </section>

@@ -82,7 +82,7 @@
     <nav class="navbar navbar-expand-sm navbar-light" style="background: linear-gradient(to right, #1A2980, #26D0CE); color:white; box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
         <div class="container">
             
-            <a class="navbar-brand" href="../index.php"><img src="{{ URL::asset('img/titulo-white.png') }}"  /> .com</a>
+            <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ URL::asset('img/titulo-white.png') }}"  /> .com</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -111,9 +111,11 @@
                      <div class="ml-lg-4">
                       <div class="color-mode d-lg-flex justify-content-center align-items-center">
                           
+                          <button class="btn btn-light btn-sm">Admin</button>
+                          
                           <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" class="btn btn-light btn-sm">
+                            <button :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" class="btn btn-light btn-sm" style="margin-left:5px;">
                                 <i class="fas fa-sign-in-alt"></i> {{ __('Log Out') }}
                             </button>
                           </form>
@@ -168,11 +170,10 @@
 
                             {{-- /admin --}}
                             <div class="">
-                                <p style="color:white; font-size:17px; letter-spacing:1px;">Administrador</p>
-                                <a href="/aprendendo-laravel/public/formanime"><button class="btn btn-primary btn-sm btn-thema-black" style="width:100%;">Adicionar Anime</button></a>
+                                <a href="{{ route('formanime') }}"><button class="btn btn-primary btn-sm btn-thema-black" style="width:100%;">Adicionar Anime</button></a>
                                 <a href="{{ route('formassistindo') }}"><button class="btn btn-primary btn-sm btn-thema-black" style="width:100%; margin-top:10px;">Assistindo</button></a>
-                                <button class="btn btn-primary btn-sm btn-thema-black" style="width:100%; margin-top:10px;">Todos os Animes</button>
-                                <button class="btn btn-primary btn-sm btn-thema-black" style="width:100%; margin-top:10px;">Meu Ranking</button>
+                                <button class="btn btn-secondary btn-sm btn-thema-black" style="width:100%; margin-top:10px;">Todos os Animes</button>
+                                <button class="btn btn-secondary btn-sm btn-thema-black" style="width:100%; margin-top:10px;">Meu Ranking</button>
                                 <hr>
                             </div>
 
