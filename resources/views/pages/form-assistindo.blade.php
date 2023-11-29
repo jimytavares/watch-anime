@@ -114,6 +114,7 @@
             </div><br/>
             
             <p>{{ $teste2 }}</p>
+            <p>ID DA SESSAO: {{ $teste3 }}</p>
             
         </div>
         

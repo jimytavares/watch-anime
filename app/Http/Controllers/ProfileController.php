@@ -66,11 +66,8 @@ class ProfileController extends Controller
     public function __construct(){
         
         $this->id_user2 = 'teste';
-        
-        
-        /* Adicionando exp vinculado ao usuario apos add new anime */
-        $session_user = auth()->user();
-        $this->user_id_sse = Session::get($session_user->id);
+        /*tentando pegar o id do usuario da sessao pra armazenar em uma variavel dentro do construtor para usar nos controladores*/
+        $this->user_id_sse = Session()->getId();
         
         /*$id_user = $session_user->id;
         users::findOrFail($id_user)->increment('exp', 1);*/
@@ -163,12 +160,13 @@ class ProfileController extends Controller
         $table_animes = table_anime::all();
         
         $teste2 = $this->id_user2;
+        $teste3 = $this->user_id_sse;
         
         $session_user = auth()->user();
         $id_user_sse = $session_user->id;
         $nivel_usuario = users::where('id', $id_user_sse)->get();
         
-        return view('pages.form-assistindo', ["nome" => $nome, "table_animes" => $table_animes, "nivel_usuario" => $nivel_usuario, "id_user_sse" => $id_user_sse, "teste2" => $teste2]);
+        return view('pages.form-assistindo', ["nome" => $nome, "table_animes" => $table_animes, "nivel_usuario" => $nivel_usuario, "id_user_sse" => $id_user_sse, "teste2" => $teste2, "teste3" => $teste3]);
     }
     
     public function assistindoAdd(request $request){
