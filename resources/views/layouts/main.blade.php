@@ -77,6 +77,75 @@
         
         .btn-menu{ color:white; letter-spacing:2px; }
         .btn-menu:hover{ text-decoration: underline; }
+        /* CSS */
+.button-85 {
+  padding: 0.6em 2em;
+  border: none;
+  outline: none;
+  color: rgb(255, 255, 255);
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-85:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing-button-85 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowing-button-85 {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.button-85:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #222;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+        
+        
 </style>
 </head>
 <body class="bodyanimeted resp-bodyAll">  
@@ -85,7 +154,7 @@
     <nav class="navbar navbar-expand-sm navbar-light" style="background: linear-gradient(to right, #1A2980, #26D0CE); color:white; box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
         <div class="container">
             
-            <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ URL::asset('img/titulo-white.png') }}"  /> .com</a>
+            <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ URL::asset('img/linux/dev1.png') }}" style="width:50px;" /> .com</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -150,9 +219,7 @@
                                         <h4>Jimy Dickson Jales da Silva</h4>
                                         <small style="color:#38ef7d;">Level: {{$level_user}}</small>
                                         <div class="progress">
-                                            @foreach($exp_usuario as $exp_user)
-                                                <div class="progress-bar bg-success" role="progressbar" style="width: {{$exp_user->exp}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{$exp_user->exp}}%</div>
-                                            @endforeach
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: {{$exp_user}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{$exp_user}}%</div>
                                         </div>
                                         <div class="" style="margin-top:10px;">
                                             <a href="https://www.intoxianime.com/2023/08/guia-de-temporada-outubro-2023/" target="_blank"><button class="btn btn-primary btn-sm" style="background-color:#2a80b9; border:none;">Intoxy Anime</button></a>
@@ -165,8 +232,39 @@
                                 </div>
                             </div>
 
+                            {{-- /dev --}}
+                            <div class="">
+                                <a href="{{ route('dashboard') }}"><button class="btn btn-primary btn-sm btn-thema-black button-85" style="width:100%; letter-spacing:2px;">Dashboard</button></a>
+                                <button class="btn btn-primary btn-sm button-85" type="button" data-bs-toggle="collapse" data-bs-target="#laravel" aria-expanded="false" aria-controls="collapseExample" style="width:100%; margin-top:10px; color:#ff2d20; letter-spacing:2px;"><i class="fab fa-laravel"></i> Laravel 10.33</button>
+                                <div class="collapse" id="laravel">
+                                  <div class="" style="margin-top:10px;">
+                                      <a href="{{ route('laravelMigrations') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Migrations</button></a>
+                                      <a href="{{ route('laravelEloquent') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Eloquente ORM</button></a>
+                                      <a href="{{ route('apache2') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Models</button></a>
+                                      <a href="{{ route('createProject') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Create Projetct</button></a>
+                                      <a href="{{ route('apache2') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Erros</button></a>
+                                  </div>
+                                </div>
+                                
+                                <button class="btn btn-primary btn-sm btn-thema-black button-85" type="button" data-bs-toggle="collapse" data-bs-target="#mysql" aria-expanded="false" aria-controls="collapseExample" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-database"></i> MySQL</button>
+                                <div class="collapse" id="mysql">
+                                  <div class="" style="margin-top:10px;">
+                                      <a href="{{ route('apache2') }}"><button class="btn btn-sm btn-thema-black" style="width:100%; margin-top:10px;">Apache 2</button></a>
+                                  </div>
+                                </div>
+                                
+                                <button class="btn btn-primary btn-sm btn-thema-black button-85" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width:100%; margin-top:10px; letter-spacing:2px;"><i class="fab fa-linux"></i> Linux Server</button>
+                                <div class="collapse" id="collapseExample">
+                                  <div class="" style="margin-top:10px;">
+                                      <a href="{{ route('linuxComandos') }}"><button class="btn btn-sm" style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Comandos</button></a>
+                                      <a href="{{ route('apache2') }}"><button class="btn btn-sm" style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Apache 2</button></a>
+                                  </div>
+                                </div>
+                            </div>
+                            
                             {{-- /admin --}}
                             <div class="">
+                                <hr style="height:2px; background-color:blue; ">
                                 <a href="{{ route('dashboard') }}"><button class="btn btn-primary btn-sm btn-thema-black" style="width:100%;">Admin</button></a>
                                 <a href="{{ route('formanime') }}"><button class="btn btn-primary btn-sm btn-thema-black" style="width:100%; margin-top:10px;">Adicionar Anime</button></a>
                             </div>

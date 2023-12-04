@@ -40,3 +40,8 @@ class SeuControlador extends Controller {
         // Acessar $this->suaVariavel
     }
 }
+<p>next</p>
+<br/>
+{{$teste1}}
+{{$teste2}}<br/>
+{{$teste3}}

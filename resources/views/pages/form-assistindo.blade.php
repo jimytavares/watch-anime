@@ -114,7 +114,7 @@
             </div><br/>
             
             <p>{{ $teste2 }}</p>
-            <p>ID DA SESSAO: {{ $teste3 }}</p>
+            <p>ID DA SESSAO: {{ $id_user_sse }}</p>
             
         </div>
         

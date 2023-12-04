@@ -33,6 +33,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/teste', [ProfileController::class, 'teste']);
     Route::get('/home', [ProfileController::class, 'home'])->name('home');
     
+    Route::get('/apache2', [ProfileController::class, 'apache2'])->name('apache2');
+    Route::get('/linuxComandos', [ProfileController::class, 'linuxComandos'])->name('linuxComandos');
+    
+    Route::get('/laravel-migrations', [ProfileController::class, 'laravelMigrations'])->name('laravelMigrations');
+    Route::get('/laravel-eloquent', [ProfileController::class, 'laravelEloquent'])->name('laravelEloquent');
+    Route::get('/createProject', [ProfileController::class, 'createProject'])->name('createProject');
+    
     Route::get('/formanime', [ProfileController::class, 'formanime'])->name('formanime');
     Route::post('/formanime', [ProfileController::class, 'animeAdd'])->name('animeAdd');
 

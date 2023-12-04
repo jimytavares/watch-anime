@@ -88,7 +88,16 @@ class ProfileController extends Controller
         $usuario = auth()->user();
         $id_user_sse = $usuario->id;
         
-        return view('pages.teste', ["usuario" => $usuario, "id_user_sse" => $id_user_sse]);
+        // Retrieve a model by its primary key...
+        $teste1 = users::find(1);
+
+        // Retrieve the first model matching the query constraints...
+        $teste2 = users::where('id', 5)->first();
+
+        // Alternative to retrieving the first model matching the query constraints...
+        $teste3 = users::firstWhere('id', 5);
+        
+        return view('pages.teste', compact(["usuario", "id_user_sse", "teste1", "teste2", "teste3"]));
     }
     
     public function home(){
@@ -97,7 +106,7 @@ class ProfileController extends Controller
         $nome = "jimy";
         $id_user_sse = Auth::id() ?? Session::get('user_id');
         $level_user = users::where('id', $id_user_sse)->value('level');
-        $exp_usuario = users::where('id', $id_user_sse)->get();
+        $exp_user = users::where('id', $id_user_sse)->value('exp');
         $idade = "30";
         
         $buscar2 = request('search2');
@@ -139,7 +148,7 @@ class ProfileController extends Controller
                 ->get();
         }
         
-        return view('pages.home', compact(["nome", "idade", "table_assistidos", "buscar2", "table_continua", "dt", "table_parados", "table_animes", "busca", "dataAtual", "ranking10Anime", "rankingAnime", "id_user_sse", "nivel_usuario", "level_user", "exp_usuario"]));
+        return view('pages.home', compact(["nome", "idade", "table_assistidos", "buscar2", "table_continua", "dt", "table_parados", "table_animes", "busca", "dataAtual", "ranking10Anime", "rankingAnime", "id_user_sse", "nivel_usuario", "level_user", "exp_user"]));
     }
     
     public function formanime(){
@@ -175,7 +184,7 @@ class ProfileController extends Controller
         $nome = "jimy";
         $id_user_sse = Auth::id() ?? Session::get('user_id');
         $level_user = users::where('id', $id_user_sse)->value('level');
-        $exp_usuario = users::where('id', $id_user_sse)->get();
+        $exp_user = users::where('id', $id_user_sse)->value('exp');
         
         /* Consultas */
         $table_animes = table_anime::all();
@@ -186,7 +195,7 @@ class ProfileController extends Controller
         $session_user = auth()->user();
         $id_user_sse = $session_user->id;*/
         
-        return view('pages.form-assistindo', ["nome" => $nome, "table_animes" => $table_animes, "teste2" => $teste2, "teste3" => $teste3, "id_user_sse" => $id_user_sse, "level_user" => $level_user, "exp_usuario" => $exp_usuario]);
+        return view('pages.form-assistindo', ["nome" => $nome, "table_animes" => $table_animes, "teste2" => $teste2, "teste3" => $teste3, "id_user_sse" => $id_user_sse, "level_user" => $level_user, "exp_user" => $exp_user]);
     }
     
     public function assistindoAdd(request $request){
@@ -376,4 +385,56 @@ class ProfileController extends Controller
         table_continua::findOrFail($request->id)->decrement('episodio', 1);
         return redirect('/');
     }
+    
+    /* DEV */
+    public function apache2(){
+        
+        /* Globals */
+        $id_user_sse = Auth::id() ?? Session::get('user_id');
+        $level_user = users::where('id', $id_user_sse)->value('level');
+        $exp_user = users::where('id', $id_user_sse)->value('exp');
+        
+        return view('dev.apache2', compact(["id_user_sse", "level_user", "exp_user"]));
+    }
+    
+    public function linuxComandos(){
+        
+        /* Globals */
+        $id_user_sse = Auth::id() ?? Session::get('user_id');
+        $level_user = users::where('id', $id_user_sse)->value('level');
+        $exp_user = users::where('id', $id_user_sse)->value('exp');
+        
+        return view('dev.linux-comandos', compact(["id_user_sse", "level_user", "exp_user"]));
+    }
+    
+    public function laravelMigrations(){
+        
+        /* Globals */
+        $id_user_sse = Auth::id() ?? Session::get('user_id');
+        $level_user = users::where('id', $id_user_sse)->value('level');
+        $exp_user = users::where('id', $id_user_sse)->value('exp');
+        
+        return view('dev.laravel-migrations', compact(["id_user_sse", "level_user", "exp_user"]));
+    }
+    
+    public function laravelEloquent(){
+        
+        /* Globals */
+        $id_user_sse = Auth::id() ?? Session::get('user_id');
+        $level_user = users::where('id', $id_user_sse)->value('level');
+        $exp_user = users::where('id', $id_user_sse)->value('exp');
+        
+        return view('dev.laravel-eloquent', compact(["id_user_sse", "level_user", "exp_user"]));
+    }
+    
+    public function createProject(){
+        
+        /* Globals */
+        $id_user_sse = Auth::id() ?? Session::get('user_id');
+        $level_user = users::where('id', $id_user_sse)->value('level');
+        $exp_user = users::where('id', $id_user_sse)->value('exp');
+        
+        return view('dev.laravel-create', compact(["id_user_sse", "level_user", "exp_user"]));
+    }
+    
 }
