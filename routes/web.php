@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProfileController::class, 'index']);
 
+Route::get('/teste', [ProfileController::class, 'teste']);
 
 Route::get('/infoanime/{id}', [ProfileController::class, 'infoanime']);
 Route::get('/listadeanimes', [ProfileController::class, 'listadeanimes']);
@@ -25,12 +26,9 @@ Route::get('/list-ranking', [ProfileController::class, 'list_ranking']);
 Route::get('/plusanimec/{id}', [ProfileController::class, 'plusanimec']);
 Route::get('/decreanimec/{id}', [ProfileController::class, 'decreanimec']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', function () { return view('dashboard'); })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/teste', [ProfileController::class, 'teste']);
     Route::get('/home', [ProfileController::class, 'home'])->name('home');
     
     Route::get('/apache2', [ProfileController::class, 'apache2'])->name('apache2');

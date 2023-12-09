@@ -89,7 +89,7 @@ class ProfileController extends Controller
         $id_user_sse = $usuario->id;
         
         // Retrieve a model by its primary key...
-        $teste1 = users::find(1);
+        $teste1 = users::find(5);
 
         // Retrieve the first model matching the query constraints...
         $teste2 = users::where('id', 5)->first();
@@ -257,6 +257,11 @@ class ProfileController extends Controller
         /* Add +1 em episodio, quando assistido */
         table_assistindo::findOrFail($id_assist)->increment('episodio', 1);
         
+        /* Adicionando exp vinculado ao usuario apos add new anime */
+        $session_user = auth()->user();
+        $id_user = $session_user->id;
+        users::findOrFail($id_user)->increment('exp', 1);
+        
         /* Adicionando +7 dias na coluna data_semana */
         $tb_anime = table_anime::findOrFail($id_anime);
         $dataAnime = $tb_anime->data_semana;
@@ -270,6 +275,11 @@ class ProfileController extends Controller
         
         /* subtrai 7 dias na coluna assistindo */
         table_assistindo::findOrFail($id_assist)->decrement('episodio', 1);
+        
+        /* Adicionando exp vinculado ao usuario apos add new anime */
+        $session_user = auth()->user();
+        $id_user = $session_user->id;
+        users::findOrFail($id_user)->decrement('exp', 1);
         
         /* subtrai 7 dias na coluna data_semana */
         $tb_anime = table_anime::findOrFail($id_anime);

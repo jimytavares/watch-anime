@@ -26,16 +26,18 @@
           <td>$variavel = User::all();</td>
         </tr>
         <tr>
-          <th scope="row">Select registro expesifico</th>
-          <td>$variavel = User::findOrFail($id);</td>
+          <th scope="row">Select registro específico</th>
+          <td>$variavel = User::findOrFail($id);<br/>
+                $variavel = users::find(5);<br/>
+        </td>
         </tr>
         <tr>
           <th scope="row">Select WHERE + unico registro + PRIMEIRO</th>
-          <td>$teste2 = users::where('id', 5)->first(); <br/> $teste3 = users::firstWhere('id', 5);</td>
+          <td>$variavel = users::where('id', 5)->first(); <br/> $variavel = users::firstWhere('id', 5);</td>
         </tr>
         <tr>
           <th scope="row">Select WHERE</th>
-          <td colspan="2">$model = User::where('votes', '>', 100)->firstOrFail(); <br/> $model = User::where('product_line_id', 1)->get(); <br/> $model = User::where('product_line_id', 1)->orderBy('product_line_id','description')->take(10)->get();</td>
+          <td colspan="2">$variavel = User::where('votes', '>', 100)->firstOrFail(); <br/> $variavel = User::where('product_line_id', 1)->get(); <br/> $variavel = User::where('product_line_id', 1)->orderBy('product_line_id','description')->take(10)->get();</td>
         </tr>
         <tr>
           <th scope="row">condition COUNT</th>

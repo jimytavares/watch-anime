@@ -42,6 +42,6 @@ class SeuControlador extends Controller {
 }
 <p>next</p>
 <br/>
-{{$teste1}}
-{{$teste2}}<br/>
-{{$teste3}}
+<p><b>users::find(1):</b> {{$teste1}}</p>
+<p><b>users::where('id', 5)->first():</b> {{$teste2}}</p>
+<p><b>users::firstWhere('id', 5):</b> {{$teste3}}</p>
