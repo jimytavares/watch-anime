@@ -45,3 +45,10 @@ class SeuControlador extends Controller {
 <p><b>users::find(1):</b> {{$teste1}}</p>
 <p><b>users::where('id', 5)->first():</b> {{$teste2}}</p>
 <p><b>users::firstWhere('id', 5):</b> {{$teste3}}</p>
+<p><b>t:</b> {{$exp_user}}</p>
+
+@if($exp_user >= 22.00)
+ <p>certo</p>
+@else
+<p>errado</p>
+@endif

@@ -93,11 +93,14 @@ class ProfileController extends Controller
 
         // Retrieve the first model matching the query constraints...
         $teste2 = users::where('id', 5)->first();
+        
+        $slc_userExp = users::findOrFail($id_user_sse);
+        $exp_user = $slc_userExp->exp;
 
         // Alternative to retrieving the first model matching the query constraints...
         $teste3 = users::firstWhere('id', 5);
         
-        return view('pages.teste', compact(["usuario", "id_user_sse", "teste1", "teste2", "teste3"]));
+        return view('pages.teste', compact(["usuario", "id_user_sse", "teste1", "teste2", "teste3", "exp_user"]));
     }
     
     public function home(){
@@ -119,7 +122,7 @@ class ProfileController extends Controller
         /* Selects table */ 
         $table_animes = table_anime::all();
         $table_continua = table_continua::with('nome_anime')->get();
-        $table_parados = AnimesParados::with('nome_anime')->get();
+        $table_parados = AnimesParados::with('nome_anime')->orderBy('updated_at', 'asc')->get();
         
         /* Section ranking anime*/
         $rankingAnime = table_anime::where('temporada', 'summer/julho')
@@ -205,6 +208,8 @@ class ProfileController extends Controller
         $id_user = $session_user->id;
         users::findOrFail($id_user)->increment('exp', 1);
         
+        
+        
         /* Cadastrando novo anime */
         $animewatch = new table_assistindo;
         
@@ -261,6 +266,16 @@ class ProfileController extends Controller
         $session_user = auth()->user();
         $id_user = $session_user->id;
         users::findOrFail($id_user)->increment('exp', 1);
+        
+        /* verificação de exp para up level e zerar exp batendo os 100exp */
+        $slc_user = users::findOrFail($id_user);
+        $exp_user = $slc_user->exp;
+        if($exp_user >= 100.00){
+            $slc_user->increment('level', 1);
+            $slc_user->decrement('exp', 100);
+        }else{
+            echo 'teste menor';
+        }
         
         /* Adicionando +7 dias na coluna data_semana */
         $tb_anime = table_anime::findOrFail($id_anime);
@@ -339,6 +354,7 @@ class ProfileController extends Controller
     
     public function addparados(request $request, $id){
         
+        
         $table_assistidos = table_assistindo::findOrFail($id);
         
         $id_update = $table_assistidos->id_anime;
@@ -356,6 +372,7 @@ class ProfileController extends Controller
         $animePausados->link = $link_update;
         
         $animePausados->save();
+        $table_assistidos->delete();
         
         return redirect('/');
     }

@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'path' => env('TELESCOPE_PATH', 'watch-anime/public/telescope'),
+    'path' => env('TELESCOPE_PATH', 'watch-anime/public'),
 
     /*
     |--------------------------------------------------------------------------
