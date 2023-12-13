@@ -14,33 +14,37 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ProfileController::class, 'index']);
+Route::group([], function (){
+    
+    Route::get('/', [ProfileController::class, 'index']);
 
-Route::get('/teste', [ProfileController::class, 'teste']);
+    Route::get('/teste', [ProfileController::class, 'teste']);
 
-Route::get('/infoanime/{id}', [ProfileController::class, 'infoanime']);
-Route::get('/listadeanimes', [ProfileController::class, 'listadeanimes']);
+    Route::get('/infoanime/{id}', [ProfileController::class, 'infoanime']);
+    Route::get('/listadeanimes', [ProfileController::class, 'listadeanimes']);
 
-Route::get('/list-ranking', [ProfileController::class, 'list_ranking']);
+    Route::get('/list-ranking', [ProfileController::class, 'list_ranking']);
 
-Route::get('/plusanimec/{id}', [ProfileController::class, 'plusanimec']);
-Route::get('/decreanimec/{id}', [ProfileController::class, 'decreanimec']);
+    Route::get('/plusanimec/{id}', [ProfileController::class, 'plusanimec']);
+    Route::get('/decreanimec/{id}', [ProfileController::class, 'decreanimec']);
+});
+
 
 Route::get('/dashboard', [ProfileController::class, 'home'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+/*Route::middleware('auth')->group(function () {*/
+Route::group(['middleware' => ['auth']], function () {
+    
     Route::get('/home', [ProfileController::class, 'home'])->name('home');
     
     Route::get('/apache2', [ProfileController::class, 'apache2'])->name('apache2');
     Route::get('/linuxComandos', [ProfileController::class, 'linuxComandos'])->name('linuxComandos');
     
+    Route::get('/createProject', [ProfileController::class, 'createProject'])->name('createProject');
     Route::get('/laravel-migrations', [ProfileController::class, 'laravelMigrations'])->name('laravelMigrations');
     Route::get('/laravel-eloquent', [ProfileController::class, 'laravelEloquent'])->name('laravelEloquent');
-    Route::get('/createProject', [ProfileController::class, 'createProject'])->name('createProject');
+    Route::get('/laravel-auth', [ProfileController::class, 'laravelAuth'])->name('laravelAuth');
     
-    Route::get('/formanime', [ProfileController::class, 'formanime'])->name('formanime');
-    Route::post('/formanime', [ProfileController::class, 'animeAdd'])->name('animeAdd');
-
     Route::get('/formassistindo', [ProfileController::class, 'formassistindo'])->name('formassistindo');
         Route::post('/formassistindo', [ProfileController::class, 'assistindoAdd'])->name('assistindoAdd');
         Route::delete('/destroy_assistindo/{id}', [ProfileController::class, 'destroy_assistindo']);
@@ -55,6 +59,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+});
+
+Route::group(['middleware' => ['auth', 'admin']], function (){
+        
+    Route::get('/admin/formanime', [ProfileController::class, 'formanime'])->name('formanime');
+        Route::post('/admin/formanime', [ProfileController::class, 'animeAdd'])->name('animeAdd');
 });
 
 

@@ -159,13 +159,13 @@ class ProfileController extends Controller
         /* Globals */
         $id_user_sse = Auth::id() ?? Session::get('user_id');
         $level_user = users::where('id', $id_user_sse)->value('level');
-        $exp_usuario = users::where('id', $id_user_sse)->get();
+        $exp_user = users::where('id', $id_user_sse)->get();
         
         $DataAtual = date('Y');
         
         $table_animes = table_anime::all();
         
-        return view('pages.form-dbanime', ["DataAtual" => $DataAtual, "table_animes" => $table_animes, "id_user_sse" => $id_user_sse, "level_user" => $level_user, "exp_usuario" => $exp_usuario]);
+        return view('admin.form-dbanime', ["DataAtual" => $DataAtual, "table_animes" => $table_animes, "id_user_sse" => $id_user_sse, "level_user" => $level_user, "exp_user" => $exp_user]);
     }
     
     public function animeAdd(request $request){
@@ -442,6 +442,16 @@ class ProfileController extends Controller
         $exp_user = users::where('id', $id_user_sse)->value('exp');
         
         return view('dev.laravel-migrations', compact(["id_user_sse", "level_user", "exp_user"]));
+    }
+    
+    public function laravelAuth(){
+        
+        /* Globals */
+        $id_user_sse = Auth::id() ?? Session::get('user_id');
+        $level_user = users::where('id', $id_user_sse)->value('level');
+        $exp_user = users::where('id', $id_user_sse)->value('exp');
+        
+        return view('dev.laravel-auth', compact(["id_user_sse", "level_user", "exp_user"]));
     }
     
     public function laravelEloquent(){

@@ -302,6 +302,7 @@
                                 <button class="btn btn-primary btn-sm button-85" type="button" data-bs-toggle="collapse" data-bs-target="#laravel" aria-expanded="false" aria-controls="collapseExample" style="width:100%; margin-top:10px; color:#ff2d20; letter-spacing:2px;"><i class="fab fa-laravel"></i> Laravel 10.33</button>
                                 <div class="collapse" id="laravel">
                                   <div class="" style="margin-top:10px;">
+                                      <a href="{{ route('laravelAuth') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Auth</button></a>
                                       <a href="{{ route('laravelMigrations') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Migrations</button></a>
                                       <a href="{{ route('laravelEloquent') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Eloquente ORM</button></a>
                                       <a href="{{ route('apache2') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Models</button></a>
