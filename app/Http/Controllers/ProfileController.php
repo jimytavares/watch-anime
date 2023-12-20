@@ -106,11 +106,11 @@ class ProfileController extends Controller
     public function home(){
         
         /* Globals */
-        $nome = "jimy";
         $id_user_sse = Auth::id() ?? Session::get('user_id');
-        $level_user = users::where('id', $id_user_sse)->value('level');
-        $exp_user = users::where('id', $id_user_sse)->value('exp');
-        $idade = "30";
+            $level_user = users::where('id', $id_user_sse)->value('level');
+            $exp_user = users::where('id', $id_user_sse)->value('exp');
+            $name_user = users::where('id', $id_user_sse)->value('name');
+            $cargo_user = users::where('id', $id_user_sse)->value('cargo');
         
         $buscar2 = request('search2');
         $dt = date('d/m/Y');
@@ -122,7 +122,7 @@ class ProfileController extends Controller
         /* Selects table */ 
         $table_animes = table_anime::all();
         $table_continua = table_continua::with('nome_anime')->get();
-        $table_parados = AnimesParados::with('nome_anime')->orderBy('updated_at', 'asc')->get();
+        $table_parados = AnimesParados::where('id_usuario', $id_user_sse)->orderBy('updated_at', 'asc')->get();
         
         /* Section ranking anime*/
         $rankingAnime = table_anime::where('temporada', 'summer/julho')
@@ -151,19 +151,19 @@ class ProfileController extends Controller
                 ->get();
         }
         
-        return view('pages.home', compact(["nome", "idade", "table_assistidos", "buscar2", "table_continua", "dt", "table_parados", "table_animes", "busca", "dataAtual", "ranking10Anime", "rankingAnime", "id_user_sse", "nivel_usuario", "level_user", "exp_user"]));
+        return view('pages.home', compact(["table_assistidos", "buscar2", "table_continua", "dt", "table_parados", "table_animes", "busca", "dataAtual", "ranking10Anime", "rankingAnime", "id_user_sse", "nivel_usuario", "level_user", "exp_user", "name_user", "cargo_user"]));
     }
     
     public function formanime(){
         
         /* Globals */
         $id_user_sse = Auth::id() ?? Session::get('user_id');
-        $level_user = users::where('id', $id_user_sse)->value('level');
         $exp_user = users::where('id', $id_user_sse)->get();
+        $level_user = users::where('id', $id_user_sse)->value('level');
         
         $DataAtual = date('Y');
         
-        $table_animes = table_anime::all();
+        $table_animes = table_anime::whereJsonContains('genero', ["Fantasia"])->get();
         
         return view('admin.form-dbanime', ["DataAtual" => $DataAtual, "table_animes" => $table_animes, "id_user_sse" => $id_user_sse, "level_user" => $level_user, "exp_user" => $exp_user]);
     }
@@ -184,10 +184,11 @@ class ProfileController extends Controller
     public function formassistindo(){
         
         /* Globals */
-        $nome = "jimy";
         $id_user_sse = Auth::id() ?? Session::get('user_id');
-        $level_user = users::where('id', $id_user_sse)->value('level');
-        $exp_user = users::where('id', $id_user_sse)->value('exp');
+            $level_user = users::where('id', $id_user_sse)->value('level');
+            $exp_user = users::where('id', $id_user_sse)->value('exp');
+            $name_user = users::where('id', $id_user_sse)->value('name');
+            $cargo_user = users::where('id', $id_user_sse)->value('cargo');
         
         /* Consultas */
         $table_animes = table_anime::all();
@@ -198,7 +199,7 @@ class ProfileController extends Controller
         $session_user = auth()->user();
         $id_user_sse = $session_user->id;*/
         
-        return view('pages.form-assistindo', ["nome" => $nome, "table_animes" => $table_animes, "teste2" => $teste2, "teste3" => $teste3, "id_user_sse" => $id_user_sse, "level_user" => $level_user, "exp_user" => $exp_user]);
+        return view('pages.form-assistindo', compact(["table_animes", "teste2", "teste3", "id_user_sse", "level_user", "exp_user", "name_user", "cargo_user"]));
     }
     
     public function assistindoAdd(request $request){
@@ -207,8 +208,6 @@ class ProfileController extends Controller
         $session_user = auth()->user();
         $id_user = $session_user->id;
         users::findOrFail($id_user)->increment('exp', 1);
-        
-        
         
         /* Cadastrando novo anime */
         $animewatch = new table_assistindo;
@@ -219,7 +218,7 @@ class ProfileController extends Controller
         
         $animewatch->nota = $request->nota;
         $animewatch->descricao = $request->descricao;
-        $animewatch->id_usuario = $request->id_usuario;
+        $animewatch->id_usuario = $id_user;
         $animewatch->link = $request->link;
 
         $animewatch->save();
@@ -230,13 +229,13 @@ class ProfileController extends Controller
     public function destroy_assistindo($id){
         
         table_assistindo::findOrFail($id)->delete();
-        return redirect('/');
+        return redirect()->route('home');
     }
     
     public function destroy_parados($id){
         
         AnimesParados::findOrFail($id)->delete();
-        return redirect('/');
+        return redirect()->route('home');
     }
     
     public function edit_assistindo($id){
@@ -448,10 +447,12 @@ class ProfileController extends Controller
         
         /* Globals */
         $id_user_sse = Auth::id() ?? Session::get('user_id');
-        $level_user = users::where('id', $id_user_sse)->value('level');
-        $exp_user = users::where('id', $id_user_sse)->value('exp');
+            $level_user = users::where('id', $id_user_sse)->value('level');
+            $exp_user = users::where('id', $id_user_sse)->value('exp');
+            $name_user = users::where('id', $id_user_sse)->value('name');
+            $cargo_user = users::where('id', $id_user_sse)->value('cargo');
         
-        return view('dev.laravel-auth', compact(["id_user_sse", "level_user", "exp_user"]));
+        return view('dev.laravel-auth', compact(["id_user_sse", "level_user", "exp_user", "name_user", "cargo_user"]));
     }
     
     public function laravelEloquent(){

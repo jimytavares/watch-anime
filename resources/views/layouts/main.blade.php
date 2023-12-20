@@ -261,106 +261,104 @@
         </div>
     </nav>
     
-    {{-- .left/USUARIO --}}
     <div class="row">
+        
+        {{-- .left/template --}}
         <div class="col-3">
 
-            <section style="margin-top:40px;">
-                <div class="container-fluid">
+            <div class="row" style="width:95%; margin:0 auto; margin-top:40px;">
+                <div class="thema-black" style="border-radius:3px; box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;">
 
-                    <div class="row" style="width:99%; margin:0 auto;">
-
-                        <!-- #### .left #### -->
-                        <div class="thema-black" style="border-radius:3px; box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;;">
-
-                            {{-- /Usuario --}}
-                            <div class="box-user">
-                                <div class="row" style="margin-top:15px;">
-                                    <div class="col-4">
-                                        <img src="{{ URL::asset('img/animes/ningen-fushin.jpg') }}" style="width:100%; border-radius:5px; box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;"/>
-                                    </div>
-                                    <div class="col-8">
-                                        <h4>Jimy Dickson Jales da Silva</h4>
-                                        <small style="color:#38ef7d;">Level: {{$level_user}}</small>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: {{$exp_user}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{$exp_user}}%</div>
-                                        </div>
-                                        <div class="" style="margin-top:10px;">
-                                            <a href="https://www.intoxianime.com/2023/08/guia-de-temporada-outubro-2023/" target="_blank"><button class="btn btn-primary btn-sm" style="background-color:#2a80b9; border:none;">Intoxy Anime</button></a>
-                                            <a href="https://animesdigital.org/" target="_blank"><button class="btn btn-primary btn-sm" style="background-color:#2ecd71; border:none;">Anime Assistir</button></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <hr style="height:2px; background-color:blue; ">
-                                    </div>
+                    {{-- /Usuario --}}
+                    <div class="box-user">
+                        <div class="row" style="margin-top:15px;">
+                            <div class="col-4">
+                                <img src="{{ URL::asset('img/animes/ningen-fushin.jpg') }}" style="width:100%; border-radius:5px; box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;"/>
+                            </div>
+                            <div class="col-8">
+                                <h4>{{$name_user}}</h4>
+                                <small style="color:#38ef7d;">Level: {{$level_user}}</small>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{$exp_user}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{$exp_user}}%</div>
+                                </div>
+                                <div class="" style="margin-top:10px;">
+                                    <a href="https://www.intoxianime.com/2023/08/guia-de-temporada-outubro-2023/" target="_blank"><button class="btn btn-primary btn-sm" style="background-color:#2a80b9; border:none;">Intoxy Anime</button></a>
+                                    <a href="https://animesdigital.org/" target="_blank"><button class="btn btn-primary btn-sm" style="background-color:#2ecd71; border:none;">Anime Assistir</button></a>
                                 </div>
                             </div>
-
-                            {{-- /dev --}}
-                            <div class="">
-                                <a href="{{ route('dashboard') }}"><button class="btn btn-primary btn-sm btn-thema-black button-85" style="width:100%; letter-spacing:2px;">Dashboard</button></a>
-                                <button class="btn btn-primary btn-sm button-85" type="button" data-bs-toggle="collapse" data-bs-target="#laravel" aria-expanded="false" aria-controls="collapseExample" style="width:100%; margin-top:10px; color:#ff2d20; letter-spacing:2px;"><i class="fab fa-laravel"></i> Laravel 10.33</button>
-                                <div class="collapse" id="laravel">
-                                  <div class="" style="margin-top:10px;">
-                                      <a href="{{ route('laravelAuth') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Auth</button></a>
-                                      <a href="{{ route('laravelMigrations') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Migrations</button></a>
-                                      <a href="{{ route('laravelEloquent') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Eloquente ORM</button></a>
-                                      <a href="{{ route('apache2') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Models</button></a>
-                                      <a href="{{ route('createProject') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Create Projetct</button></a>
-                                      <a href="{{ route('apache2') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Erros</button></a>
-                                  </div>
-                                </div>
-                                
-                                <button class="btn btn-primary btn-sm btn-thema-black button-85" type="button" data-bs-toggle="collapse" data-bs-target="#mysql" aria-expanded="false" aria-controls="collapseExample" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-database"></i> MySQL</button>
-                                <div class="collapse" id="mysql">
-                                  <div class="" style="margin-top:10px;">
-                                      <a href="{{ route('apache2') }}"><button class="btn btn-sm btn-thema-black" style="width:100%; margin-top:10px;">Apache 2</button></a>
-                                  </div>
-                                </div>
-                                
-                                <button class="btn btn-primary btn-sm btn-thema-black button-85" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width:100%; margin-top:10px; letter-spacing:2px;"><i class="fab fa-linux"></i> Linux Server</button>
-                                <div class="collapse" id="collapseExample">
-                                  <div class="" style="margin-top:10px;">
-                                      <a href="{{ route('linuxComandos') }}"><button class="btn btn-sm" style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Comandos</button></a>
-                                      <a href="{{ route('apache2') }}"><button class="btn btn-sm" style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Apache 2</button></a>
-                                  </div>
-                                </div>
-                            </div>
-                            
-                            {{-- /Animes --}}
-                            <div class="">
+                            <div class="col-12">
                                 <hr style="height:2px; background-color:blue; ">
-                                <a href="{{ route('dashboard') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Administrativo</button></a>
-                                <a href="{{ route('formanime') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Adicionar Anime</button></a>
-                                <a href="{{ route('formassistindo') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Assistir Anime</button></a>
                             </div>
-                            <div class="" style="margin-top:15px;">
-                                <button class="btn btn-secondary btn-sm btn" style="width:100%; margin-top:10px;">Todos os Animes</button>
-                                <button class="btn btn-secondary btn-sm btn" style="width:100%; margin-top:10px;">Meu Ranking</button>
-                                <hr>
-                            </div>
-
                         </div>
-
                     </div>
 
+                    {{-- /dev --}}
+                    <div class="">
+                        <a href="{{ route('dashboard') }}"><button class="btn btn-primary btn-sm btn-thema-black button-85" style="width:100%; letter-spacing:2px;">Dashboard</button></a>
+                        <button class="btn btn-primary btn-sm button-85" type="button" data-bs-toggle="collapse" data-bs-target="#laravel" aria-expanded="false" aria-controls="collapseExample" style="width:100%; margin-top:10px; color:#ff2d20; letter-spacing:2px;"><i class="fab fa-laravel"></i> Laravel 10.33</button>
+                        <div class="collapse" id="laravel">
+                          <div class="" style="margin-top:10px;">
+                              <a href="{{ route('laravelAuth') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Auth</button></a>
+                              <a href="{{ route('laravelMigrations') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Migrations</button></a>
+                              <a href="{{ route('laravelEloquent') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Eloquente ORM</button></a>
+                              <a href="{{ route('apache2') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Models</button></a>
+                              <a href="{{ route('createProject') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Create Projetct</button></a>
+                              <a href="{{ route('apache2') }}"><button class="btn btn-sm " style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Erros</button></a>
+                          </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-sm btn-thema-black button-85" type="button" data-bs-toggle="collapse" data-bs-target="#mysql" aria-expanded="false" aria-controls="collapseExample" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-database"></i> MySQL</button>
+                        <div class="collapse" id="mysql">
+                          <div class="" style="margin-top:10px;">
+                              <a href="{{ route('apache2') }}"><button class="btn btn-sm btn-thema-black" style="width:100%; margin-top:10px;">Apache 2</button></a>
+                          </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-sm btn-thema-black button-85" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width:100%; margin-top:10px; letter-spacing:2px;"><i class="fab fa-linux"></i> Linux Server</button>
+                        <div class="collapse" id="collapseExample">
+                          <div class="" style="margin-top:10px;">
+                              <a href="{{ route('linuxComandos') }}"><button class="btn btn-sm" style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Comandos</button></a>
+                              <a href="{{ route('apache2') }}"><button class="btn btn-sm" style="width:100%; margin-top:10px; background-color:white; border-radius:10px;">Apache 2</button></a>
+                          </div>
+                        </div>
+                    </div>
+
+                    {{-- /Animes --}}
+                    @if($cargo_user == 'admin')
+                        <div class="">
+                            <hr style="height:2px; background-color:blue; ">
+                            <a href="{{ route('dashboard') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Administrativo</button></a>
+                            <a href="{{ route('formanime') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Adicionar Anime</button></a>
+                            <a href="{{ route('formassistindo') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Assistir Anime</button></a>
+                        </div>
+                        <div class="" style="margin-top:15px;">
+                            <button class="btn btn-secondary btn-sm btn" style="width:100%; margin-top:10px;">Todos os Animes</button>
+                            <button class="btn btn-secondary btn-sm btn" style="width:100%; margin-top:10px;">Meu Ranking</button>
+                            <hr>
+                        </div>
+                    @endif
+                    
+                    <div style="color:#1d2939;">.</div>
+                    
                 </div>
-            </section>
-            
+            </div>
+
         </div>
     
+        {{-- .right/template --}}
         <div class="col">
             @yield('content')
         </div>
     </div>
     
-    <footer style="margin-top:40px;">
+    
+    
+<footer style="margin-top:40px;">
         <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
             Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
         </div>
     </footer>
-
-    <script type="text/javascript">
+<script type="text/javascript">
         $(function(){
             $("#txtBusca").keyup(function(){
                 var texto = $(this).val();
@@ -382,9 +380,8 @@
             });
         });
 	</script>
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
 
 </body>
 </html>

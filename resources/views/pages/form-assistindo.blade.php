@@ -94,10 +94,6 @@
                         <div class="col-8">
                             <input type="text" name="link" class="form-control" id="exampleFormControlInput1" placeholder="">
                         </div>
-                        <div class="col-2">
-                            {{-- passando o id da sessão do usuário --}}
-                            <input type="text" name="id_usuario" class="form-control" id="exampleFormControlInput1" value="{{$id_user_sse}}" placeholder="{{$id_user_sse}}" style="color:white; border:none;">
-                        </div>
                       </div>
                     </div>
 
