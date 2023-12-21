@@ -158,17 +158,22 @@ class ProfileController extends Controller
         
         /* Globals */
         $id_user_sse = Auth::id() ?? Session::get('user_id');
-        $exp_user = users::where('id', $id_user_sse)->get();
-        $level_user = users::where('id', $id_user_sse)->value('level');
+            $level_user = users::where('id', $id_user_sse)->value('level');
+            $exp_user = users::where('id', $id_user_sse)->value('exp');
+            $name_user = users::where('id', $id_user_sse)->value('name');
+            $cargo_user = users::where('id', $id_user_sse)->value('cargo');
         
         $DataAtual = date('Y');
         
         $table_animes = table_anime::whereJsonContains('genero', ["Fantasia"])->get();
+        $slc_animeAll = table_anime::orderBy('id', 'desc')->get();
         
-        return view('admin.form-dbanime', ["DataAtual" => $DataAtual, "table_animes" => $table_animes, "id_user_sse" => $id_user_sse, "level_user" => $level_user, "exp_user" => $exp_user]);
+        return view('admin.form-dbanime', compact(["DataAtual", "table_animes", "id_user_sse", "level_user", "exp_user", "name_user", "cargo_user", "slc_animeAll"]));
     }
     
     public function animeAdd(request $request){
+        
+       /*dd($request->all());*/
         $dbanime = new table_anime;
 
         $dbanime->nome = $request->nome;
@@ -176,9 +181,74 @@ class ProfileController extends Controller
         $dbanime->temporada = $request->temporada;
         $dbanime->episodio = $request->episodio;
         $dbanime->genero = $request->genero;
+        $dbanime->data_semana = $request->data_semana;
+        $arquivo = $request->file('img');
+        
+        if ($request->hasFile('img')) {
 
+            // Certifique-se de que $arquivo é um objeto UploadedFile válido
+            if ($arquivo instanceof \Illuminate\Http\UploadedFile && $arquivo->isValid()) {
+                $nomeArquivo = pathinfo($arquivo->getClientOriginalName(), PATHINFO_FILENAME);
+                $extensao = $arquivo->getClientOriginalExtension();
+                $nomeArquivoArmazenado = $nomeArquivo . '_' . time() . '.' . $extensao;
+
+                // Use o método store para salvar o arquivo
+                $arquivo->storeAs('public/imgs', $nomeArquivoArmazenado);
+
+            } else {
+                return response()->json(['error' => 'O arquivo enviado não é válido.']);
+            }
+        } else {
+            return response()->json(['error' => 'O campo de arquivo "image" está ausente na requisição.']);
+        }
+        
+/*        if($request->hasFile('image') && file_exists($arquivo->getPathname()) && $arquivo->isValid()){
+            $nomeArquivo = pathinfo($arquivo->getClientOriginalName(), PATHINFO_FILENAME);
+            $extensao = $arquivo->getClientOriginalExtension();
+            $nomeArquivoArmazenado = $nomeArquivo . '_' . time() . '.' . $extensao;
+            $arquivo->storeAs('public/imgs', $nomeArquivoArmazenado);
+
+        } else {
+            dd([
+                'hasFile' => $request->hasFile('image'),
+                'isValid' => $request->file('image')->isValid(),
+                'errors' => $request->file('image')->getErrorMessage(),
+            ]);
+            return response()->json(['error' => 'Erro no upload do arquivo.']);
+        }*/
+        
         $dbanime->save();
+        
         return redirect('/');
+    }
+    
+    public function animeAdd2(request $request){
+        
+        $tb_anime = new table_anime;
+        
+        $tb_anime->nome = $request->nome;
+        $tb_anime->estreia = $request->estreia;
+        $tb_anime->temporada = $request->temporada;
+        $tb_anime->episodio = $request->episodio;
+        $tb_anime->genero = $request->genero;
+        $tb_anime->data_semana = $request->data_semana;
+        $arquivo = $request->file('arquivo');
+        
+       if(isset($arquivo) || !empty($arquivo)){
+            
+            $nomeArquivo = pathinfo($arquivo->getClientOriginalName(), PATHINFO_FILENAME);
+            $extensao = $arquivo->getClientOriginalExtension();
+            $nomeArquivoArmazenado = $nomeArquivo . '_' . time() . '.' . $extensao;
+            $arquivo->storeAs('public/animes', $nomeArquivoArmazenado);
+            $tb_anime->image = $nomeArquivoArmazenado;
+            
+        } else {
+            return response()->json(['error' => 'O arquivo enviado não é válido.']);
+        } 
+        
+        $tb_anime->save();
+        
+        return redirect()->route('formanime');
     }
     
     public function formassistindo(){
@@ -353,6 +423,8 @@ class ProfileController extends Controller
     
     public function addparados(request $request, $id){
         
+        $session_user = auth()->user();
+        $id_user = $session_user->id;
         
         $table_assistidos = table_assistindo::findOrFail($id);
         
@@ -369,6 +441,7 @@ class ProfileController extends Controller
         $animePausados->nota = $nota_update;
         $animePausados->descricao = $desc_update;
         $animePausados->link = $link_update;
+        $animePausados->id_usuario = $id_user;
         
         $animePausados->save();
         $table_assistidos->delete();

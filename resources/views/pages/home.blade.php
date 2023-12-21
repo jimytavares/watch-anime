@@ -12,9 +12,9 @@
                     <div class="row" style="margin-bottom:10px;">
                         <div class="col-4">
                             @if($table_assistindo->nota == '10')
-                                <img src="{{URL::asset('img/animes/' . $table_assistindo->nome_anime->image )}}" style="width:100%; height:170px; border-radius:5px; border: 2px solid #00ff00; margin-top:10px;">
+                                <img src="{{URL::asset('storage/animes/' . $table_assistindo->nome_anime->image )}}" style="width:100%; height:170px; border-radius:5px; border: 2px solid #00ff00; margin-top:10px;">
                             @else
-                                <img src="{{URL::asset('img/animes/' . $table_assistindo->nome_anime->image )}}" style="width:100%; height:170px; border-radius:5px; margin-top:10px;">
+                                <img src="{{URL::asset('storage/animes/' . $table_assistindo->nome_anime->image )}}" style="width:100%; height:170px; border-radius:5px; margin-top:10px;">
                             @endif
                             <div class="row">
                                 <div class="col-md-auto">
@@ -29,8 +29,8 @@
                             <h5 style="padding-top:5px;">{{$table_assistindo->nome_anime->nome}}</h5>
                             <div class="" style="background-color:;">
                                 <small>Próximo Ep: <span style="color:green;">{{date('d.m.Y', strtotime($table_assistindo->nome_anime->data_semana)) }}</span></small>
-                                <a href="{{ route('decreanime', [ 'id_anime' => $table_assistindo->id_anime, 'id_assist' => $table_assistindo->id ] ) }}"><img src="{{URL::asset('img/plus2.png')}}" style="width:30px; margin-left:5px;"/></a>
-                                <a href="{{ route('plusanime', [ 'id_anime' => $table_assistindo->id_anime, 'id_assist' => $table_assistindo->id ] ) }}" style="border:none;"><img src='{{URL::asset("img/plus1.png")}}' style='width:30px; margin-left:5px;'/></a>
+                                <a href="{{ route('decreanime', [ 'id_anime' => $table_assistindo->id_anime, 'id_assist' => $table_assistindo->id ] ) }}"><img src="{{URL::asset('storage/plus2.png')}}" style="width:30px; margin-left:5px;"/></a>
+                                <a href="{{ route('plusanime', [ 'id_anime' => $table_assistindo->id_anime, 'id_assist' => $table_assistindo->id ] ) }}" style="border:none;"><img src='{{URL::asset("storage/plus1.png")}}' style='width:30px; margin-left:5px;'/></a>
                             </div>
 
                             @if ( $table_assistindo->nome_anime->data_semana > $dataAtual)
@@ -96,7 +96,7 @@
                 <div class="row" style="margin-top:20px;">
                     @foreach($table_parados as $animes_parados)
                         <div class="col-2">
-                            <img src="{{ URL::asset('img/animes/' . $animes_parados->nome_anime->image) }}" style="width:100%; border-radius:5px;"/>
+                            <img src="{{ URL::asset('storage/animes/' . $animes_parados->nome_anime->image) }}" style="width:100%; border-radius:5px;"/>
                             <p style="color:white;"><b>Episódio Parado:</b> {{$animes_parados->episodio}} <br/> <small style="letter-spacing:1px;">{{$animes_parados->nome_anime->temporada}}</small> <br/> <small>Data: {{date('d.m.Y', strtotime($animes_parados->updated_at)) }}</small></p>
                             <div class="row">
                                 <div class="col-md-auto">
@@ -132,7 +132,7 @@
                             @foreach($rankingAnime as $rankingAnimes)
                                 <div class="timeline-wrapper">
                                      <div class="timeline-yr">
-                                          <img src="{{URL::asset('img/animes/' . $rankingAnimes->image )}}" style="width:100%; height:; border-radius:5px; box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;">
+                                          <img src="{{URL::asset('storage/animes/' . $rankingAnimes->image )}}" style="width:100%; height:; border-radius:5px; box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;">
                                      </div>
                                      <div class="timeline-info">
                                           <h4><span>{{$rankingAnimes->nome}}</span><small style="color:#3385ff;">Ep: {{$rankingAnimes->episodio}}</small></h4>
@@ -149,12 +149,12 @@
                         @foreach($ranking10Anime as $ranking10Animes)
                             <div class="row">
                                  <div class="col-3">
-                                      <img src="{{URL::asset('img/animes/' . $ranking10Animes->nome_anime->image )}}" style="width:100%; height:; border-radius:5px; box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;">
+                                      <img src="{{URL::asset('storage/animes/' . $ranking10Animes->nome_anime->image )}}" style="width:100%; height:; border-radius:5px; box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;">
                                  </div>
                                  <div class="col-9">
                                       <h5><span>{{$ranking10Animes->nome_anime->nome}}</span><small style="color:#3385ff;">Nota: {{$ranking10Animes->nota}}</small></h5>
                                       <p>{{$ranking10Animes->descricao}}</p>
-                                      <img src="{{ URL::asset('img/icons/2-icon.gif') }}" />
+                                      <img src="{{ URL::asset('storage/icons/2-icon.gif') }}" />
                                       <p>{{$ranking10Animes->nome_anime->temporada}}</p>
                                       <a href="#" style="color:green;"><i class="far fa-arrow-alt-circle-right"></i> Saiba mais</a>
                                  </div>

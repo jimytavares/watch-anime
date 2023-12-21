@@ -27,6 +27,8 @@ Route::group([], function (){
 
     Route::get('/plusanimec/{id}', [ProfileController::class, 'plusanimec']);
     Route::get('/decreanimec/{id}', [ProfileController::class, 'decreanimec']);
+    
+    
 });
 
 
@@ -66,6 +68,7 @@ Route::group(['middleware' => ['auth', 'admin']], function (){
         
     Route::get('/admin/formanime', [ProfileController::class, 'formanime'])->name('formanime');
         Route::post('/admin/formanime', [ProfileController::class, 'animeAdd'])->name('animeAdd');
+        Route::post('/animeAdd2', [ProfileController::class, 'animeAdd2'])->name('animeAdd2');
 });
 
 

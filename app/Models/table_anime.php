@@ -12,9 +12,9 @@ class table_anime extends Model
     protected $primaryKey = 'id';
     protected $table = "table_anime";
     
-    protected $attributes = [
+    /*protected $attributes = [
         'image' => 'no-image.png',
-    ];
+    ];*/
     
     protected $casts = [
         'genero' => 'array'

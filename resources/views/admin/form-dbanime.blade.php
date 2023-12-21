@@ -25,7 +25,7 @@
             <!-- form -->
             <div class="container" style="margin-left:3%; width: 1000px; margin-top:30px; border: ;">
                 
-                <form action="{{ route('animeAdd') }}" method="POST" enctype="multipart/form-date" autocomplete="on" style="font-family: 'Poppins', sans-serif;">
+                <!--<form action="{{ route('animeAdd') }}" method="POST" enctype="multipart/form-date" autocomplete="on" style="font-family: 'Poppins', sans-serif;">
                   @csrf
                         
                     <div class="form-group">
@@ -136,7 +136,7 @@
                             <p>Data Semana:</p>
                         </div>
                         <div class="col">
-                            <input id="date" name="data_semana" type="date">
+                            <input id="" name="data_semana" type="date">
                         </div>
                       </div>
                     </div>
@@ -147,7 +147,7 @@
                             <label for="formFile" class="form-label">Capa do Anime:</label>
                         </div>
                         <div class="col">
-                            <input class="form-control" name="image" type="file">
+                            <input type="file" name="img" >
                         </div>
                       </div>
                     </div>
@@ -162,8 +162,182 @@
                     </div>
                         
                 </form>
+                -->
+                
+                <form action="{{ route('animeAdd2') }}" method="post" enctype="multipart/form-data" style="font-family: 'Poppins', sans-serif;">
+                @csrf
+                    
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-2">
+                                <p><b>Nome:</b></p>
+                            </div>
+                            <div class="col">
+                                <input type="text" name="nome" class="form-control" id="exampleFormControlInput1" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:20px;">
+                        <div class="col-2">
+                            <p><b>Temporada:</b></p>
+                        </div>
+                        <div class="col">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="temporada" id="inlineRadio1" value="Janeiro Inverno {{$DataAtual}}">
+                                <label class="form-check-label" for="inlineRadio1" style="color:black;">Janeiro Inverno</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="temporada" id="inlineRadio2" value="Abril Primavera {{$DataAtual}}">
+                                <label class="form-check-label" for="inlineRadio2" style="color:black;">Abril Primavera</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="temporada" id="inlineRadio2" value="Junho Verão {{$DataAtual}}">
+                                <label class="form-check-label" for="inlineRadio2" style="color:black;">Junho Verão</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="temporada" id="inlineRadio2" value="Outubro {{$DataAtual}}">
+                                <label class="form-check-label" for="inlineRadio2" style="color:black;">Outubro</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-2">
+                            <p>Epísodios:</p>
+                        </div>
+                        <div class="col">
+                            <input type="text" name="episodio" class="form-control" id="exampleFormControlInput1" placeholder="data que saiu o anime">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-2">
+                            <p>Estreia:</p>
+                        </div>
+                        <div class="col">
+                            <input id="date" name="estreia" type="date">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-2">
+                            <p>Gênero:</p>
+                        </div>
+                        <div class="col" style="color:black;">
+                            <div class="col-3 form-check form-check-inline">
+                              <input class="form-check-input" name="genero[]" type="checkbox" value="Ação">
+                              <label class="form-check-label" for="inlineCheckbox1">Ação</label>
+                            </div>
+                            <div class="col-3 form-check form-check-inline">
+                              <input class="form-check-input" name="genero[]" type="checkbox" value="Aventura">
+                              <label class="form-check-label" for="inlineCheckbox2">Aventura</label>
+                            </div>
+                            <div class="col-3 form-check form-check-inline">
+                              <input class="form-check-input" name="genero[]" type="checkbox" value="Cartas">
+                              <label class="form-check-label" for="inlineCheckbox2">Cartas</label>
+                            </div>
+                            <div class="col-3 form-check form-check-inline">
+                              <input class="form-check-input" name="genero[]" type="checkbox" value="Comédia">
+                              <label class="form-check-label" for="inlineCheckbox2">Comédia</label>
+                            </div>
+                            <div class="col-3 form-check form-check-inline">
+                              <input class="form-check-input" name="genero[]" type="checkbox" value="Drama">
+                              <label class="form-check-label" for="inlineCheckbox2">Drama</label>
+                            </div>
+                            <div class="col-3 form-check form-check-inline">
+                              <input class="form-check-input" name="genero[]" type="checkbox" value="Escolar">
+                              <label class="form-check-label" for="inlineCheckbox2">Escolar</label>
+                            </div>
+                            <div class="col-3 form-check form-check-inline">
+                              <input class="form-check-input" name="genero[]" type="checkbox" value="Fantasia">
+                              <label class="form-check-label" for="inlineCheckbox2">Fantasia</label>
+                            </div>
+                            <div class="col-3 form-check form-check-inline">
+                              <input class="form-check-input" name="genero[]" type="checkbox" value="RPG">
+                              <label class="form-check-label" for="inlineCheckbox2">RPG</label>
+                            </div>
+                            <div class="col-3 form-check form-check-inline">
+                              <input class="form-check-input" name="genero[]" type="checkbox" value="Samurai">
+                              <label class="form-check-label" for="inlineCheckbox2">Samurai</label>
+                            </div>
+                            <div class="col-3 form-check form-check-inline">
+                              <input class="form-check-input" name="genero[]" type="checkbox" value="Slice of Life">
+                              <label class="form-check-label" for="inlineCheckbox2">Slice of Life</label>
+                            </div>
+                            <div class="col-3 form-check form-check-inline">
+                              <input class="form-check-input" name="genero[]" type="checkbox" value="Misterio">
+                              <label class="form-check-label" for="inlineCheckbox2">Misterio</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-2">
+                            <p>Data Semana:</p>
+                        </div>
+                        <div class="col">
+                            <input id="" name="data_semana" type="date">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-2">
+                            <label for="formFile" class="form-label">Capa do Anime:</label>
+                        </div>
+                        <div class="col">
+                            <input type="file" name="arquivo" >
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-success" style="border:none;">Cadastrar</button>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!--<input type="text" name="nome" class="form-control">
+                    
+                    <input type="file" name="arquivo" />
+                    <button type="submit">enviar</button>-->
+                    
+                </form>
                 
             </div><br/>
+            
+        </div>
+        
+        <!-- #### BOX 01: all animes #### -->
+        <div class="whitebox-group">
+            
+            <!-- title -->
+            <div class="" style="background-image: linear-gradient(to right, #959abc, #6eb1d7, #54d8b1); color:white;">
+                <h5 style="margin-left: 33px; font-family: 'Poppins', sans-serif; padding-top:20px;"> <b style="color:#333333;">Todos Animes:</b> Assistidos</h5>
+                <hr style="border-top: 1px solid white; opacity:0.4;">
+            </div>
+            
+            <div class="container" style="padding-top:20px;">
+                <div class="row">
+                    @foreach($slc_animeAll as $anime)
+                        <div class="col-2" style="margin-top:15px;">
+                            <img src="{{ URL::asset('storage/animes/' . $anime->image) }}" style="width:100%; border-radius:5px;"/>
+                            <h5 style="margin-top:5px;">{{$anime->nome}}</h5>
+                            <P>{{$anime->temporada}}</P>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
             
         </div>
         

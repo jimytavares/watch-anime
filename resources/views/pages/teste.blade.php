@@ -52,3 +52,12 @@ class SeuControlador extends Controller {
 @else
 <p>errado</p>
 @endif
+
+<br/>
+
+@php
+    echo asset('storage/text.txt')
+@endphp
+
+<img src="{{URL::asset('storage/text.txt')}}" target="_blank">
+<img src="{{URL::asset('storage/imgs/foto_1703118031.jpg')}}" target="_blank">

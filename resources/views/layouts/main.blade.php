@@ -218,7 +218,7 @@
     <nav class="navbar navbar-expand-sm navbar-light" style="background: linear-gradient(to right, #1A2980, #26D0CE); color:white; box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
         <div class="container">
             
-            <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ URL::asset('img/linux/dev1.png') }}" style="width:50px;" /> .com</a>
+            <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ URL::asset('storage/linux/dev1.png') }}" style="width:50px;" /> .com</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -273,7 +273,7 @@
                     <div class="box-user">
                         <div class="row" style="margin-top:15px;">
                             <div class="col-4">
-                                <img src="{{ URL::asset('img/animes/ningen-fushin.jpg') }}" style="width:100%; border-radius:5px; box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;"/>
+                                <img src="{{ URL::asset('storage/animes/ningen-fushin.jpg') }}" style="width:100%; border-radius:5px; box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;"/>
                             </div>
                             <div class="col-8">
                                 <h4>{{$name_user}}</h4>
@@ -291,10 +291,15 @@
                             </div>
                         </div>
                     </div>
+                    
+                    {{-- /home --}}
+                    <div class="">
+                        <a href="{{ route('dashboard') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" style="width:100%; letter-spacing:2px;">Home</button></a>
+                    </div>
 
                     {{-- /dev --}}
                     <div class="">
-                        <a href="{{ route('dashboard') }}"><button class="btn btn-primary btn-sm btn-thema-black button-85" style="width:100%; letter-spacing:2px;">Dashboard</button></a>
+                        <hr style="height:2px; background-color:blue; ">
                         <button class="btn btn-primary btn-sm button-85" type="button" data-bs-toggle="collapse" data-bs-target="#laravel" aria-expanded="false" aria-controls="collapseExample" style="width:100%; margin-top:10px; color:#ff2d20; letter-spacing:2px;"><i class="fab fa-laravel"></i> Laravel 10.33</button>
                         <div class="collapse" id="laravel">
                           <div class="" style="margin-top:10px;">
