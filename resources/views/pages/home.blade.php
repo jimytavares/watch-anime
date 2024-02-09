@@ -27,8 +27,10 @@
                         </div>
                         <div class="col-8">
                             <h5 style="padding-top:5px;">{{$table_assistindo->nome_anime->nome}}</h5>
-                            <div class="" style="background-color:;">
-                                <small>Próximo Ep: <span style="color:green;">{{date('d.m.Y', strtotime($table_assistindo->nome_anime->data_semana)) }}</span></small>
+                            <hr>
+                            <div class="">
+                                <?php $next_ep = $table_assistindo->episodio + 1; ?>
+                                <small>Próximo Ep: <span style="color:#1aff1a;">{{$next_ep}} - {{date('d.m.Y', strtotime($table_assistindo->nome_anime->data_semana)) }}</span></small>
                                 <a href="{{ route('decreanime', [ 'id_anime' => $table_assistindo->id_anime, 'id_assist' => $table_assistindo->id ] ) }}"><img src="{{URL::asset('storage/plus2.png')}}" style="width:30px; margin-left:5px;"/></a>
                                 <a href="{{ route('plusanime', [ 'id_anime' => $table_assistindo->id_anime, 'id_assist' => $table_assistindo->id ] ) }}" style="border:none;"><img src='{{URL::asset("storage/plus1.png")}}' style='width:30px; margin-left:5px;'/></a>
                             </div>
@@ -51,20 +53,28 @@
 
                             <div class="row btn-actions">
                                 <div class="col-6">
-                                    <a href="{{$table_assistindo->link}}" target="_blank"><button class="btn btn-outline-success btn-sm" style="width:110px; background-color:; border:;"><i class='fas fa-tv' style='font-size:15px; margin-top:3px;'></i> Assistir</button></a>
+                                    <div class="dropdown">
+                                      <a class="btn btn-outline-primary btn-sm dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Ações Animes
+                                      </a>
+                                      <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ URL::asset('create_parados/' . $table_assistindo->id) }}" style="text-align:center;"><i class="fa fa-times" aria-hidden="true" style="font-size:18px; color:red;"></i> Pausar</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <form action="{{ url('destroy_assistindo/' . $table_assistindo->id) }}" method="post" class="dropdown-item" style="text-align:center;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <i class="fa fa-trash-o" style="font-size:20px; border:none; color:red;"></i> Excluir
+                                            </form>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item" href="{{ route('addranking', $table_assistindo->id) }}" style="text-align:center;"><i class="fa fa-check-square-o" aria-hidden="true" style="font-size:18px; color:green;"></i> Ranking</a></li>
+                                      </ul>
+                                    </div>
                                 </div>
+
                                 <div class="col-6">
-                                    <a href="{{ URL::asset('create_parados/' . $table_assistindo->id) }}"><button class="btn btn-primary btn-sm" style="width:110px; background-color:#2d3e50; border:none;"><i class="fa fa-times" aria-hidden="true" style="font-size:20px; color:red;"></i> Pausar</button></a>
-                                </div>
-                                <div class="col-6" style="margin-top:10px;">
-                                    <form action="{{ url('destroy_assistindo/' . $table_assistindo->id) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-outline-danger btn-sm" style="width:110px; background-color:#2d3e50; border:none; color:white;"><i class="fa fa-trash-o" style="font-size:20px; border:none; color:red;"></i> Excluir</button>
-                                    </form>
-                                </div>
-                                <div class="col-6" style="margin-top:10px;">
-                                    <a href="/aprendendo-laravel/public/formassistindo/addranking/{{$table_assistindo->id}}"><button class="btn btn-primary btn-sm" style="width:110px; background-color:#2d3e50; border:none;"><i class="fa fa-check-square-o" aria-hidden="true" style="font-size:20px; color:#00e600;"></i> Ranking</button></a>
+                                    <a href="{{$table_assistindo->link}}" target="_blank"><button class="btn btn-outline-success btn-sm" style="width:110px; background-color:; border:;"><i class='fas fa-tv' style='font-size:15px; margin-top:3px;'></i> Assistir</button></a>
                                 </div>
                             </div>
 
@@ -75,48 +85,6 @@
             
             <div class="">
                 .
-            </div>
-        </div>
-
-        {{-- ./Parados --}}
-        <div class="row thema-black py-4" style="width:100%; margin-top:40px; box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;">
-            <div class="container">
-
-                {{-- .title --}}
-                <div class="row">
-                    <div class="col-10">
-                        <h4 style="letter-spacing:2px;"><i class="fas fa-hourglass-half"></i> Animes Pausados</h4>
-                    </div>
-                    <div class="col-2 activ">
-                        <a><i class="fas fa-sync-alt"></i> Minimizar</a>
-                    </div>
-                </div>
-
-                {{-- .table --}}
-                <div class="row" style="margin-top:20px;">
-                    @foreach($table_parados as $animes_parados)
-                        <div class="col-2">
-                            <img src="{{ URL::asset('storage/animes/' . $animes_parados->nome_anime->image) }}" style="width:100%; border-radius:5px;"/>
-                            <p style="color:white;"><b>Episódio Parado:</b> {{$animes_parados->episodio}} <br/> <small style="letter-spacing:1px;">{{$animes_parados->nome_anime->temporada}}</small> <br/> <small>Data: {{date('d.m.Y', strtotime($animes_parados->updated_at)) }}</small></p>
-                            <div class="row">
-                                <div class="col-md-auto">
-                                    <button class="btn btn-success btn-sm" style="background-color:#33ffbb; color:black;"><i class="far fa-thumbs-up"></i></button>
-                                </div>
-                                <div class="col">
-                                    <a href="{{$animes_parados->link}}" target="_blank"><button class="btn btn-outline-success btn-sm" style="width:100%;">Assistir</button></a>
-                                </div>
-                                <div class="col-md-auto">
-                                    <form action="{{ url('/paradosdestroy', $animes_parados->id) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-outline-danger btn-sm" style="background-color:#ff3399; border:none; color:white;"><i class="fa fa-trash-o" style="font-size:20px; border:none; color:white;"></i></button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
             </div>
         </div>
 
@@ -146,20 +114,14 @@
                     <div class="col-lg-6 col-12">
                       <h2 class="mb-4 mobile-mt-2" style="letter-spacing:2px; color:#66ffff;">Top Ranking Animes</h2>
 
-                        @foreach($ranking10Anime as $ranking10Animes)
-                            <div class="row">
-                                 <div class="col-3">
-                                      <img src="{{URL::asset('storage/animes/' . $ranking10Animes->nome_anime->image )}}" style="width:100%; height:; border-radius:5px; box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;">
-                                 </div>
-                                 <div class="col-9">
-                                      <h5><span>{{$ranking10Animes->nome_anime->nome}}</span><small style="color:#3385ff;">Nota: {{$ranking10Animes->nota}}</small></h5>
-                                      <p>{{$ranking10Animes->descricao}}</p>
-                                      <img src="{{ URL::asset('storage/icons/2-icon.gif') }}" />
+                        <div class="row">
+                            @foreach($ranking10Anime as $ranking10Animes)
+                                 <div class="col-2">
+                                      <img src="{{URL::asset('storage/animes/' . $ranking10Animes->nome_anime->image )}}" style="width:100%; border-radius:5px; box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;">
                                       <p>{{$ranking10Animes->nome_anime->temporada}}</p>
-                                      <a href="#" style="color:green;"><i class="far fa-arrow-alt-circle-right"></i> Saiba mais</a>
                                  </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
 
                     </div>
 

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
+
 use App\Models\table_anime;
 use App\Models\table_assistindo;
 use App\Models\table_ranking;
@@ -29,6 +30,7 @@ class ProfileController extends Controller
         $getUserData = users::find($id_user_sse);
 
         return [
+            'id' => $getUserData->id,
             'level_user' => $getUserData->level,
             'exp_user' => $getUserData->exp,
             'name_user' => $getUserData->name,
@@ -119,12 +121,14 @@ class ProfileController extends Controller
     
     public function home(){
         
-        /* Globals */
-        $id_user_sse = Auth::id() ?? Session::get('user_id');
-            $level_user = users::where('id', $id_user_sse)->value('level');
-            $exp_user = users::where('id', $id_user_sse)->value('exp');
-            $name_user = users::where('id', $id_user_sse)->value('name');
-            $cargo_user = users::where('id', $id_user_sse)->value('cargo');
+        /* antigo pegar dados do usuario */
+        // $id_user_sse = Auth::id() ?? Session::get('user_id');
+        // $level_user = users::where('id', $id_user_sse)->value('level');
+        // $exp_user = users::where('id', $id_user_sse)->value('exp');
+        // $name_user = users::where('id', $id_user_sse)->value('name');
+        // $cargo_user = users::where('id', $id_user_sse)->value('cargo');
+        
+        $getUserData = $this->getUserInfo();
         
         $buscar2 = request('search2');
         $dt = date('d/m/Y');
@@ -136,7 +140,6 @@ class ProfileController extends Controller
         /* Selects table */ 
         $table_animes = table_anime::all();
         $table_continua = table_continua::with('nome_anime')->get();
-        $table_parados = AnimesParados::where('id_usuario', $id_user_sse)->orderBy('updated_at', 'asc')->get();
         
         /* Section ranking anime*/
         $rankingAnime = table_anime::where('temporada', 'summer/julho')
@@ -165,24 +168,19 @@ class ProfileController extends Controller
                 ->get();
         }
         
-        return view('pages.home', compact(["table_assistidos", "buscar2", "table_continua", "dt", "table_parados", "table_animes", "busca", "dataAtual", "ranking10Anime", "rankingAnime", "id_user_sse", "nivel_usuario", "level_user", "exp_user", "name_user", "cargo_user"]));
+        return view('pages.home', compact(["table_assistidos", "buscar2", "table_continua", "dt", "table_animes", "busca", "dataAtual", "ranking10Anime", "rankingAnime", "getUserData"]));
     }
     
     public function formanime(){
         
-        /* Globals */
-        $id_user_sse = Auth::id() ?? Session::get('user_id');
-            $level_user = users::where('id', $id_user_sse)->value('level');
-            $exp_user = users::where('id', $id_user_sse)->value('exp');
-            $name_user = users::where('id', $id_user_sse)->value('name');
-            $cargo_user = users::where('id', $id_user_sse)->value('cargo');
+        $getUserData = $this->getUserInfo();
         
         $DataAtual = date('Y');
         
         $table_animes = table_anime::whereJsonContains('genero', ["Fantasia"])->get();
         $slc_animeAll = table_anime::orderBy('id', 'desc')->get();
         
-        return view('admin.form-dbanime', compact(["DataAtual", "table_animes", "id_user_sse", "level_user", "exp_user", "name_user", "cargo_user", "slc_animeAll"]));
+        return view('admin.form-dbanime', compact(["DataAtual", "table_animes", "slc_animeAll","getUserData"]));
     }
     
     public function animeAdd(request $request){
@@ -267,12 +265,7 @@ class ProfileController extends Controller
     
     public function formassistindo(){
         
-        /* Globals */
-        $id_user_sse = Auth::id() ?? Session::get('user_id');
-            $level_user = users::where('id', $id_user_sse)->value('level');
-            $exp_user = users::where('id', $id_user_sse)->value('exp');
-            $name_user = users::where('id', $id_user_sse)->value('name');
-            $cargo_user = users::where('id', $id_user_sse)->value('cargo');
+        $getUserData = $this->getUserInfo();
         
         /* Consultas */
         $table_animes = table_anime::all();
@@ -283,7 +276,7 @@ class ProfileController extends Controller
         $session_user = auth()->user();
         $id_user_sse = $session_user->id;*/
         
-        return view('pages.form-assistindo', compact(["table_animes", "teste2", "teste3", "id_user_sse", "level_user", "exp_user", "name_user", "cargo_user"]));
+        return view('pages.form-assistindo', compact(["table_animes", "teste2", "teste3", "getUserData"]));
     }
     
     public function assistindoAdd(request $request){
@@ -405,10 +398,17 @@ class ProfileController extends Controller
         $table_ranking->nota = $nota_ranking;
         $table_ranking->descricao = $desc_ranking;
         $table_ranking->link = $link_ranking;
-        
         $table_ranking->save();
         
-        return redirect('/');
+        /*deleta o anime depois de salva no ranking*/
+        table_assistindo::findOrFail($id)->delete();
+        
+        /*adiciona xp ao finalizar anime*/
+        $session_user = auth()->user();
+        $id_user = $session_user->id;
+        users::findOrFail($id_user)->increment('exp', 1);
+        
+        return redirect('/home');
     }
     
     public function addcontinua(request $request, $id){
@@ -433,6 +433,15 @@ class ProfileController extends Controller
         $table_continua->save();
         
         return redirect('/');
+    }
+    
+    public function listAnimesParados(){
+        
+        $getUserData = $this->getUserInfo();
+
+        $table_parados = AnimesParados::where('id_usuario', $getUserData['id'])->orderBy('updated_at', 'asc')->get();
+
+        return view('pages.list-parados', compact(["table_parados", "getUserData"]));
     }
     
     public function addparados(request $request, $id){
@@ -550,6 +559,27 @@ class ProfileController extends Controller
         $getUserData = $this->getUserInfo();
         
         return view('dev.laravel-create', $getUserData);
+    }
+    
+    public function createContratoE(request $request){
+        
+        $id_extrato = $request->id_extrato;
+        $arquivo = $request->file('arquivo_extrato');
+        
+        if(isset($arquivo) || !empty($arquivo)){
+            
+            $nomeArquivo = pathinfo($arquivo->getClientOriginalName(), PATHINFO_FILENAME);
+            $extensao = $arquivo->getClientOriginalExtension();
+            $nomeArquivoArmazenado = $nomeArquivo . '_' . time() . '.' . $extensao;
+            $arquivo->storeAs('public/documentos/contratos/', $nomeArquivoArmazenado);
+            
+        } else {
+            return response()->json(['error' => 'O arquivo enviado não é válido.']);
+        } 
+        
+        contratos::where('id', $id_extrato)->update(['arquivo_extrato' => $nomeArquivoArmazenado]);
+        
+        return redirect('/formContratos')->with(['message' => 'Post updated successfully!', 'status' => 'success']);
     }
     
 }

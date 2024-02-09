@@ -20,4 +20,8 @@ class table_anime extends Model
         'genero' => 'array'
     ];
     
+    protected $fillable = [
+        'nome',  
+    ];
+    
 }

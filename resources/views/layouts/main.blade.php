@@ -276,10 +276,10 @@
                                 <img src="{{ URL::asset('storage/animes/ningen-fushin.jpg') }}" style="width:100%; border-radius:5px; box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;"/>
                             </div>
                             <div class="col-8">
-                                <h4>{{$name_user}}</h4>
-                                <small style="color:#38ef7d;">Level: {{$level_user}}</small>
+                                <h4>{{$getUserData['name_user']}}</h4>
+                                <small style="color:#38ef7d;">Level: {{$getUserData['level_user']}}</small>
                                 <div class="progress">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{$exp_user}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{$exp_user}}%</div>
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{$getUserData['exp_user']}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{$getUserData['exp_user']}}%</div>
                                 </div>
                                 <div class="" style="margin-top:10px;">
                                     <a href="https://www.intoxianime.com/2023/08/guia-de-temporada-outubro-2023/" target="_blank"><button class="btn btn-primary btn-sm" style="background-color:#2a80b9; border:none;">Intoxy Anime</button></a>
@@ -296,6 +296,17 @@
                     <div class="">
                         <a href="{{ route('dashboard') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" style="width:100%; letter-spacing:2px;">Home</button></a>
                     </div>
+                    
+                    {{-- /Animes --}}
+                    @if($getUserData['cargo_user'] == 'admin')
+                        <div class="">
+                            <hr style="height:2px; background-color:blue; ">
+                            <a href="{{ route('dashboard') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Administrativo</button></a>
+                            <a href="{{ route('formanime') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Cadastrar Anime</button></a>
+                            <a href="{{ route('formassistindo') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Assistir Anime</button></a>
+                            <a href="{{ route('listAnimesParados') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Parados</button></a>
+                        </div>
+                    @endif
 
                     {{-- /dev --}}
                     <div class="">
@@ -328,21 +339,6 @@
                         </div>
                     </div>
 
-                    {{-- /Animes --}}
-                    @if($cargo_user == 'admin')
-                        <div class="">
-                            <hr style="height:2px; background-color:blue; ">
-                            <a href="{{ route('dashboard') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Administrativo</button></a>
-                            <a href="{{ route('formanime') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Adicionar Anime</button></a>
-                            <a href="{{ route('formassistindo') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Assistir Anime</button></a>
-                        </div>
-                        <div class="" style="margin-top:15px;">
-                            <button class="btn btn-secondary btn-sm btn" style="width:100%; margin-top:10px;">Todos os Animes</button>
-                            <button class="btn btn-secondary btn-sm btn" style="width:100%; margin-top:10px;">Meu Ranking</button>
-                            <hr>
-                        </div>
-                    @endif
-                    
                     <div style="color:#1d2939;">.</div>
                     
                 </div>
