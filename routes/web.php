@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([], function (){
     
-    Route::get('/', [ProfileController::class, 'index']);
+    Route::get('/', [ProfileController::class, 'index'])->name('index');
 
     Route::get('/teste', [ProfileController::class, 'teste']);
 
@@ -55,6 +55,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/lista-animes-parados', [ProfileController::class, 'listAnimesParados'])->name('listAnimesParados');
     
+    Route::get('/plusNota/{id}', [ProfileController::class, 'plusNota'])->name('plusNota');
+    Route::get('/decreNota/{id}', [ProfileController::class, 'decreNota'])->name('decreNota');
+    
     Route::post('/formassistindo', [ProfileController::class, 'assistindoAdd'])->name('assistindoAdd');
     
     Route::put('/formassistindo/update/{id}', [ProfileController::class, 'update_assistindo']);
@@ -68,7 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::group(['middleware' => ['auth', 'admin']], function (){
         
-    Route::get('/admin/formanime', [ProfileController::class, 'formanime'])->name('formanime');
+    Route::get('/admin/formanime', [ProfileController::class, 'formAnime'])->name('formAnime');
         Route::post('/admin/formanime', [ProfileController::class, 'animeAdd'])->name('animeAdd');
         Route::post('/animeAdd2', [ProfileController::class, 'animeAdd2'])->name('animeAdd2');
 });

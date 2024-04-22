@@ -23,7 +23,6 @@ class ProfileController extends Controller
     private $id_user2;
     private $idUserSs;
     
-    
     private function getUserInfo(){
         
         $id_user_sse = Auth::id() ?? Session::get('user_id');
@@ -38,7 +37,6 @@ class ProfileController extends Controller
         ];
     }
     
-    /* Display the user's profile form */
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -46,7 +44,6 @@ class ProfileController extends Controller
         ]);
     }
 
-    /*  Update the user's profile information */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
@@ -60,7 +57,6 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /* Delete the user's account */
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
@@ -98,28 +94,16 @@ class ProfileController extends Controller
         return view('welcome');
     }
     
-    public function teste(){
+    public function testeUser(){
         
-        /* Recuperando todos os valores em array ad sessao */
         $usuario = auth()->user();
         $id_user_sse = $usuario->id;
-        
-        // Retrieve a model by its primary key...
-        $teste1 = users::find(5);
-
-        // Retrieve the first model matching the query constraints...
-        $teste2 = users::where('id', 5)->first();
-        
         $slc_userExp = users::findOrFail($id_user_sse);
         $exp_user = $slc_userExp->exp;
-
-        // Alternative to retrieving the first model matching the query constraints...
-        $teste3 = users::firstWhere('id', 5);
         
-        return view('pages.teste', compact(["usuario", "id_user_sse", "teste1", "teste2", "teste3", "exp_user"]));
-    }
-    
-    public function home(){
+        $teste1 = users::find(5);
+        $teste2 = users::where('id', 5)->first();
+        $teste3 = users::firstWhere('id', 5);
         
         /* antigo pegar dados do usuario */
         // $id_user_sse = Auth::id() ?? Session::get('user_id');
@@ -127,6 +111,11 @@ class ProfileController extends Controller
         // $exp_user = users::where('id', $id_user_sse)->value('exp');
         // $name_user = users::where('id', $id_user_sse)->value('name');
         // $cargo_user = users::where('id', $id_user_sse)->value('cargo');
+        
+        return view('pages.teste', compact(["usuario", "id_user_sse", "teste1", "teste2", "teste3", "exp_user"]));
+    }
+    
+    public function home(){
         
         $getUserData = $this->getUserInfo();
         
@@ -171,16 +160,22 @@ class ProfileController extends Controller
         return view('pages.home', compact(["table_assistidos", "buscar2", "table_continua", "dt", "table_animes", "busca", "dataAtual", "ranking10Anime", "rankingAnime", "getUserData"]));
     }
     
-    public function formanime(){
+    public function formAnime(){
         
         $getUserData = $this->getUserInfo();
-        
         $DataAtual = date('Y');
         
-        $table_animes = table_anime::whereJsonContains('genero', ["Fantasia"])->get();
         $slc_animeAll = table_anime::orderBy('id', 'desc')->get();
+        $table_animes = table_anime::whereJsonContains('genero', ["Fantasia"])->get();
         
-        return view('admin.form-dbanime', compact(["DataAtual", "table_animes", "slc_animeAll","getUserData"]));
+        $anime = table_anime::all();
+        $campos = [];
+        
+        foreach ($anime as $animes) {
+            $campos[] = ['nome' => $animes->nome, 'id' => $animes->id];
+        }
+        
+        return view('pages.admin.formAnime', compact(["DataAtual", "table_animes", "slc_animeAll", "getUserData", "campos"]));
     }
     
     public function animeAdd(request $request){
@@ -231,7 +226,7 @@ class ProfileController extends Controller
         
         $dbanime->save();
         
-        return redirect('/');
+        return redirect()->route('dashboard');
     }
     
     public function animeAdd2(request $request){
@@ -260,7 +255,7 @@ class ProfileController extends Controller
         
         $tb_anime->save();
         
-        return redirect()->route('formanime');
+        return redirect()->route('formAnime');
     }
     
     public function formassistindo(){
@@ -335,8 +330,19 @@ class ProfileController extends Controller
     
     public function plusanime($id_anime, $id_assist){
         
-        /* Add +1 em episodio, quando assistido */
+        $this->plusEpisodio($id_assist);
+        $this->plusExpUser();
+        $this->plusEpisodio_updateDate($id_anime);
+        
+        return redirect('/home')->with('error', 'Ocorreu um erro ao atualizar as tabelas.');
+    }
+    
+    public function plusEpisodio($id_assist){
+        
         table_assistindo::findOrFail($id_assist)->increment('episodio', 1);
+    }
+    
+    public function plusExpUser(){
         
         /* Adicionando exp vinculado ao usuario apos add new anime */
         $session_user = auth()->user();
@@ -352,14 +358,15 @@ class ProfileController extends Controller
         }else{
             echo 'teste menor';
         }
-        
+    }
+    
+    public function plusEpisodio_updateDate($id_anime){
+           
         /* Adicionando +7 dias na coluna data_semana */
         $tb_anime = table_anime::findOrFail($id_anime);
         $dataAnime = $tb_anime->data_semana;
         $newData = Carbon::parse($dataAnime)->addDay(7);
         table_anime::where('id', $id_anime)->update(['data_semana' => $newData]);
-
-        return redirect('/home')->with('error', 'Ocorreu um erro ao atualizar as tabelas.');
     }
     
     public function decreanime($id_anime, $id_assist){
@@ -381,6 +388,18 @@ class ProfileController extends Controller
         return redirect('/home');
     }
     
+    public function plusNota($id){
+        
+        table_assistindo::findOrFail($id)->increment('nota', 1);
+        return redirect()->route('home');
+    }
+    
+    public function decreNota($id){
+        
+        table_assistindo::findOrFail($id)->decrement('nota', 1);
+        return redirect()->route('home');
+    }
+    
     public function addranking(request $request, $id){
         
         $table_assistidos = table_assistindo::findOrFail($id);
@@ -400,13 +419,9 @@ class ProfileController extends Controller
         $table_ranking->link = $link_ranking;
         $table_ranking->save();
         
-        /*deleta o anime depois de salva no ranking*/
         table_assistindo::findOrFail($id)->delete();
         
-        /*adiciona xp ao finalizar anime*/
-        $session_user = auth()->user();
-        $id_user = $session_user->id;
-        users::findOrFail($id_user)->increment('exp', 1);
+        $this->plusExpUser();
         
         return redirect('/home');
     }
@@ -469,7 +484,7 @@ class ProfileController extends Controller
         $animePausados->save();
         $table_assistidos->delete();
         
-        return redirect('/');
+        return redirect()->route('');
     }
     
     public function infoanime($id){ 
@@ -480,7 +495,6 @@ class ProfileController extends Controller
     
     public function listadeanimes(){ 
         
-        /*GLOBALS*/
         $getUserData = $this->getUserInfo();
         
         $table_animes = table_anime::all();
@@ -488,7 +502,6 @@ class ProfileController extends Controller
         return view('pages.lista-de-animes', ["table_animes" => $table_animes, "getUserData" => $getUserData]);
     }
     
-    /* Page: Ranking */
     public function list_ranking(){
         
         $nome = "jimy";
@@ -498,7 +511,6 @@ class ProfileController extends Controller
         return view('pages.list-ranking', compact(['nome', 'table_rank']));
     }
     
-    /* Funções Table: Continuações Home */
     public function plusanimec(Request $request, $id){
                                
         table_continua::findOrFail($request->id)->increment('episodio', 1);
@@ -515,50 +527,44 @@ class ProfileController extends Controller
     /* DEV */
     public function apache2(){
         
-        /* Globals */
         $getUserData = $this->getUserInfo();
         
-        return view('dev.apache2', $getUserData);
+        return view('dev.apache2', compact(["getUserData"]));
     }
     
     public function linuxComandos(){
         
-        /* Globals */
         $getUserData = $this->getUserInfo();
         
-        return view('dev.linux-comandos', $getUserData);
+        return view('dev.linux-comandos', compact(["getUserData"]));
     }
     
     public function laravelMigrations(){
         
-        /* Globals */
         $getUserData = $this->getUserInfo();
         
-        return view('dev.laravel-migrations', $getUserData);
+        return view('dev.laravel-migrations', compact(["getUserData"]));
     }
     
     public function laravelAuth(){
         
-        /* Globals */
         $getUserData = $this->getUserInfo();
         
-        return view('dev.laravel-auth', $getUserData);
+        return view('dev.laravel-auth', compact(["getUserData"]));
     }
     
     public function laravelEloquent(){
         
-        /* Globals */
         $getUserData = $this->getUserInfo();
         
-        return view('dev.laravel-eloquent', $getUserData);
+        return view('dev.laravel-eloquent', compact(["getUserData"]));
     }
     
     public function createProject(){
         
-        /* Globals */
         $getUserData = $this->getUserInfo();
         
-        return view('dev.laravel-create', $getUserData);
+        return view('dev.laravel-create', compact(["getUserData"]));
     }
     
     public function createContratoE(request $request){

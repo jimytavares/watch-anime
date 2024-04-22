@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Meu CSS -->
     <link href="{{ URL::asset('css/new-style.css') }}" rel="stylesheet" type="text/css" media="all"/>
-    <link href="{{ URL::asset('css/style2.css') }}" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{{ URL::asset('css/style.css') }}" rel="stylesheet" type="text/css" media="all"/>
     <link href="{{ URL::asset('css/tooplate-style.css') }}" rel="stylesheet" type="text/css" media="all"/>
     <link href="{{ URL::asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" media="all"/>
     <link href="{{ URL::asset('css/unicons.css') }}" rel="stylesheet" type="text/css" media="all"/>
@@ -302,7 +302,7 @@
                         <div class="">
                             <hr style="height:2px; background-color:blue; ">
                             <a href="{{ route('dashboard') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Administrativo</button></a>
-                            <a href="{{ route('formanime') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Cadastrar Anime</button></a>
+                            <a href="{{ route('formAnime') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Cadastrar Anime</button></a>
                             <a href="{{ route('formassistindo') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Assistir Anime</button></a>
                             <a href="{{ route('listAnimesParados') }}"><button class="btn btn-primary btn-sm btn-thema-black btn-anime" type="button" style="width:100%; margin-top:10px; letter-spacing:2px; color:#00ffff !important;"><i class="fas fa-feather-alt"></i> Parados</button></a>
                         </div>
@@ -348,7 +348,9 @@
     
         {{-- .right/template --}}
         <div class="col">
-            @yield('content')
+            <div class="mt-40">
+                @yield('content')
+            </div>
         </div>
     </div>
     

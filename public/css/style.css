@@ -1,4 +1,11 @@
+/*####################*/
+/*##### GLOBALS ######*/
+/*####################*/
+
+.mt-40{ margin-top:40px; }
+
 .teste22{
     background-image: url('../img/bgsx.jpg') !important;
     background-size: cover;
 }
+

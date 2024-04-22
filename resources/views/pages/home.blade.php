@@ -1,11 +1,11 @@
 @extends('layouts.main')
 
-@section('title', 'Home Page')
+@section('title', 'Home - Watch Anime')
 
 @section('content')
             
         {{-- ./Assistindo --}}
-        <div class="row thema-black" style="margin-top:40px; width:100%; box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;">
+        <div class="row thema-black" style="width:100%; box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;">
             
             @foreach($table_assistidos as $table_assistindo)
                 <div class="" style="box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px; margin-left:20px; width:450px; margin-top:20px; height:100%;">
@@ -21,7 +21,17 @@
 
                                 </div>
                                 <div class="col">
-                                    <p style="color:white;">Nota: {{$table_assistindo->nota}}</p>
+                                    <div class="row" style="margin-top:4px;">
+                                        <div class="col-md-auto">
+                                            <a href="{{ route('decreNota', $table_assistindo->id) }}"><i class="fas fa-angle-left"></i></a>
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <p style="color:white;">{{$table_assistindo->nota}}</p>
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <a href="{{route('plusNota', $table_assistindo->id)}}"><i class="fas fa-angle-right"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -37,7 +47,7 @@
 
                             @if ( $table_assistindo->nome_anime->data_semana > $dataAtual)
                                 <div class="progress" style="margin-top:3px;">
-                                  <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: {{$table_assistindo->episodio}}0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" aria-label="Animated striped example">Ep {{$table_assistindo->episodio}} - {{date('d.m.Y', strtotime($table_assistindo->updated_at))}}</div>
+                                  <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: {{$table_assistindo->episodio}}0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" aria-label="Animated striped example">Ep {{$table_assistindo->episodio}} - {{date('d.m.Y', strtotime($table_assistindo->updated_at))}}</div>
                                 </div>
                             @elseif ( $table_assistindo->nome_anime->data_semana == $dataAtual )
                                 <div class="progress" style="margin-top:3px;">
@@ -45,7 +55,7 @@
                                 </div>
                             @else
                                 <div class="progress" style="margin-top:3px;">
-                                  <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: {{$table_assistindo->episodio}}0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" aria-label="Animated striped example">Ep {{$table_assistindo->episodio}} - {{date('d.m.Y', strtotime($table_assistindo->updated_at))}}</div>
+                                  <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: {{$table_assistindo->episodio}}0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" aria-label="Animated striped example">Ep {{$table_assistindo->episodio}} - {{date('d.m.Y', strtotime($table_assistindo->updated_at))}}</div>
                                 </div>
                             @endif
 
